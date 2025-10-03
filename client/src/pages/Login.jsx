@@ -1,16 +1,9 @@
-import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { loginUser } from '../services/authService';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-export const loginSchema = z.object({
-  email: z.email( "valid email is required"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-});
-
+import { loginSchema } from '../utils/zodSchema';
 
 
 function Login() {
@@ -47,7 +40,7 @@ const {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Username
+              Email
             </label>
             <input
               {...register("email")}
@@ -89,7 +82,7 @@ const {
         </form>
         <div className="flex">
         <h2>Don't have any account?</h2>
-        <h2 onClick={()=>{navigate("/register")}}
+        <h2 onClick={()=>navigate("/register")}
           className="text-blue-600 cursor-pointer hover:underline">Register</h2>
         </div>
       </div>
