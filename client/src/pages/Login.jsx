@@ -4,10 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from '../utils/zodSchema';
-
+import { useAuthStore } from '../context/useAuthStore.jsx';
 
 function Login() {
   const navigate = useNavigate();
+ const {login}=useAuthStore();
 
 const {
   register,
@@ -17,17 +18,21 @@ const {
   resolver: zodResolver(loginSchema),
 });
 
-  const { mutate, isPending, isError, error } = useMutation({
+  const { mutate,data, isPending, isError, error } = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
+      login(data);
       localStorage.setItem('role', data.role);
       localStorage.setItem('name', data.name);
-      setTimeout(() => navigate(`/${data.role}`), 1000);
+      setTimeout(() => navigate(`/${data.role}-dashboard`));
     },
   });
 
   const onSubmit = (data) => {
-  mutate(data); 
+  mutate({
+    email: data.email,
+    password: data.password,
+  });
 };
 
   return (
@@ -43,8 +48,9 @@ const {
               Email
             </label>
             <input
-              {...register("email")}
+              {...register("email",{required:true})}
               placeholder="Enter your email"
+              
               className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md"
             />
             {errors.email && (
@@ -60,7 +66,7 @@ const {
             </label>
             <input
               type="password"
-              {...register("password")}
+              {...register("password",{required:true})}
               placeholder="Enter your password"
               className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md"
             />
@@ -88,6 +94,7 @@ const {
       </div>
     </div>
   );
+  console.log("Login payload:", data);
 }
 
 export default Login;

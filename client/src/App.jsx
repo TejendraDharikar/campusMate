@@ -5,6 +5,7 @@ import TeacherDashboard from "./pages/TeacherDashboard";
 // import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Register from "./pages/Register";
+import DashboardLayout from "./components/DashboardLayout";
 
 const router = createBrowserRouter([
   {
@@ -16,15 +17,17 @@ const router = createBrowserRouter([
     element:<Register/>
   },
   {
-    path: "/student",
+    path: "/student-dashboard",
     element: (
       <ProtectedRoute allowedRoles={["student"]}>
-        <StudentDashboard />
+        <DashboardLayout>
+          <StudentDashboard />
+        </DashboardLayout>
       </ProtectedRoute>
     ),
   },
   {
-    path: "/teacher",
+    path: "/teacher-dashboard",
     element: (
       <ProtectedRoute allowedRoles={["teacher"]}>
         <TeacherDashboard />
