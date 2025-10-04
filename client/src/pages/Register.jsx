@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { Mutation, useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { registerSchema } from "../utils/zodSchema";
 import { registerUser } from "../services/registerService";
@@ -18,7 +18,7 @@ export default function Register() {
 
   const role = watch("role");
 
-  const { mutate, isPending, isError, error } = useMutation({
+  const mutation = useMutation({
     mutationFn: registerUser,
     onSuccess: (data) => {
       console.log("Registered:", data);

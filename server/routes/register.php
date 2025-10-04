@@ -34,7 +34,7 @@ if ($role === 'student') {
   $stmt2 = $conn->prepare("INSERT INTO students (user_id, enrollment_number, department) VALUES (?, ?, ?)");
   $stmt2->bind_param("iss", $user_id, $enrollment_number, $department);
 } elseif ($role === 'teacher') {
-  $stmt2 = $conn->prepare("INSERT INTO teachers (user_id, employee_id, department) VALUES (?, ?, ?)");
+  $stmt2 = $conn->prepare("INSERT INTO teacher_profiles (user_id, employee_id, department) VALUES (?, ?, ?)");
   $stmt2->bind_param("iss", $user_id, $employee_id, $department);
 } else {
   http_response_code(400);
@@ -53,4 +53,3 @@ echo json_encode([
   "name" => $name,
   "role" => $role
 ]);
-?>

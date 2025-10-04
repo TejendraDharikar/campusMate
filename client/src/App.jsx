@@ -6,6 +6,7 @@ import TeacherDashboard from "./pages/TeacherDashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Register from "./pages/Register";
 import DashboardLayout from "./components/DashboardLayout";
+import StudentAttendance from "./pages/StudentAttendance";
 
 const router = createBrowserRouter([
   {
@@ -30,9 +31,19 @@ const router = createBrowserRouter([
     path: "/teacher-dashboard",
     element: (
       <ProtectedRoute allowedRoles={["teacher"]}>
+        <DashboardLayout>
         <TeacherDashboard />
+        </DashboardLayout>
       </ProtectedRoute>
     ),
+  },
+  {
+path:"/student-attendance",
+element:(
+ <DashboardLayout>
+        <StudentAttendance />
+        </DashboardLayout>
+),
   },
   // {
   //   path: "/admin",
