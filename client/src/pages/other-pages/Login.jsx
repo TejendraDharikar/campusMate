@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
-import { loginUser } from '../services/authService';
+import { loginUser } from '../../services/authService.js';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from '../utils/zodSchema';
-import { useAuthStore } from '../context/useAuthStore.jsx';
+import { loginSchema } from '../../utils/zodSchema.jsx';
+import { useAuthStore } from '../../context/useAuthStore.jsx';
 
 function Login() {
   const navigate = useNavigate();

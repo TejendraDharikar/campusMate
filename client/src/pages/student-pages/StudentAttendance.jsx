@@ -1,5 +1,5 @@
-import { useAttendance } from "../hooks/useAttendance";
-import { useAuthStore } from "../context/useAuthStore";
+import { useAttendance } from "../../hooks/useAttendance";
+import { useAuthStore } from "../../context/useAuthStore";
 
 const StudentAttendance = () => {
   const { user } = useAuthStore();

@@ -1,6 +1,6 @@
 # Root-level documentation
 
-student-management-system/
+campusMate/
 ├── client/                  # React frontend (your current Vite setup)
 │   ├── public/
 │   ├── src/

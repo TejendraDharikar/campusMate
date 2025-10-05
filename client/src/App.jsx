@@ -1,12 +1,13 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
-import Login from "./pages/Login";
-import StudentDashboard from "./pages/StudentDashboard";
-import TeacherDashboard from "./pages/TeacherDashboard";
-// import AdminDashboard from "./pages/AdminDashboard";
+import Login from "./pages/other-pages/Login";
+import StudentDashboard from "./pages/student-pages/StudentDashboard";
+import TeacherDashboard from "./pages/teacher-pages/TeacherDashboard";
+// import AdminDashboard from "./pages/other-pages/AdminDashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
-import Register from "./pages/Register";
+import Register from "./pages/other-pages/Register";
 import DashboardLayout from "./components/DashboardLayout";
-import StudentAttendance from "./pages/StudentAttendance";
+import StudentAttendance from "./pages/student-pages/StudentAttendance";
+import MyCourses from "./pages/student-pages/MyCourses";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,22 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
+   {
+path:"/student-attendance",
+element:(
+ <DashboardLayout>
+        <StudentAttendance />
+        </DashboardLayout>
+),
+  },
+  {
+  path:"/student-courses",
+  element:(
+    <DashboardLayout>
+      <MyCourses/>
+    </DashboardLayout>
+  )
+  },
   {
     path: "/teacher-dashboard",
     element: (
@@ -37,14 +54,7 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
-  {
-path:"/student-attendance",
-element:(
- <DashboardLayout>
-        <StudentAttendance />
-        </DashboardLayout>
-),
-  },
+ 
   // {
   //   path: "/admin",
   //   element: (

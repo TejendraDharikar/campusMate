@@ -26,9 +26,9 @@ const Sidebar = () => {
   const roleLinks = user?.role ? links[user.role] : [];
 
   return (
-    <aside className="w-64 h-screen bg-blue-900 text-white flex flex-col justify-between">
+    <aside className="w-64 h-screen bg-gray-800 text-white flex flex-col justify-between">
       <div>
-        <h2 className="text-xl font-bold p-4 border-b border-blue-700">
+        <h2 className="text-xl font-bold p-4 border-b border-white">
           CampusMate
         </h2>
         <nav className="p-4 space-y-2">
@@ -43,7 +43,7 @@ const Sidebar = () => {
           ))}
         </nav>
       </div>
-      <div className="p-4 border-t border-blue-700">
+      <div className="p-4 border-t border-white">
         <p className="mb-2">Logged in as: {user?.name}</p>
         <button
           onClick={() => {

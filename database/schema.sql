@@ -131,6 +131,15 @@ ALTER TABLE `courses`
   ADD PRIMARY KEY (`id`),
   ADD KEY `teacher_id` (`teacher_id`);
 
+
+ALTER TABLE courses
+  MODIFY id INT(11) NOT NULL AUTO_INCREMENT,
+  MODIFY credits INT(11) DEFAULT 3,
+  ADD created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  ADD CONSTRAINT fk_teacher FOREIGN KEY (teacher_id) REFERENCES teachers(id) ON DELETE CASCADE;
+
+
+
 --
 -- Indexes for table `enrollments`
 --
