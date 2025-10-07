@@ -8,35 +8,49 @@ import { useAuthStore } from '../../context/useAuthStore.jsx';
 
 function Login() {
   const navigate = useNavigate();
- const {login}=useAuthStore();
+  const { login } = useAuthStore();
 
-const {
-  register,
-  handleSubmit,
-  formState: { errors },
-} = useForm({
-  resolver: zodResolver(loginSchema),
-});
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+  });
 
-  const { mutate,data, isPending, isError, error } = useMutation({
+  const { mutate, isError, isPending, error } = useMutation({
     mutationFn: loginUser,
-    onSuccess: (data) => {
-      login(data);
-      localStorage.setItem('role', data.role);
-      localStorage.setItem('name', data.name);
-      setTimeout(() => navigate(`/${data.role}-dashboard`));
+    onSuccess: (user) => {
+      console.log("✅ Mutation success:", user);
+
+      if (!user || typeof user.role !== "string") {
+        console.warn("⚠️ Role is missing or invalid:", user);
+        return;
+      }
+
+      login(user);
+      localStorage.setItem('role', user.role);
+      localStorage.setItem('name', user.name);
+
+      const targetRoute = `/${user.role}-dashboard`;
+      console.log("🚀 Navigating to:", targetRoute);
+      navigate(targetRoute);
     },
+    onError: (err) => {
+      console.error("❌ Login failed:", err.message);
+    }
   });
 
-  const onSubmit = (data) => {
-  mutate({
-    email: data.email,
-    password: data.password,
-  });
-};
+  const onSubmit = (formData) => {
+    console.log("📨 Form submitted with:", formData);
+    mutate({
+      email: formData.email,
+      password: formData.password,
+    });
+  };
 
   return (
-  <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 px-4">
       <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-8 space-y-6">
         <h2 className="text-2xl font-semibold text-center text-blue-700">
           Login
@@ -48,9 +62,8 @@ const {
               Email
             </label>
             <input
-              {...register("email",{required:true})}
+              {...register("email")}
               placeholder="Enter your email"
-              
               className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md"
             />
             {errors.email && (
@@ -66,7 +79,7 @@ const {
             </label>
             <input
               type="password"
-              {...register("password",{required:true})}
+              {...register("password")}
               placeholder="Enter your password"
               className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md"
             />
@@ -76,7 +89,12 @@ const {
               </p>
             )}
           </div>
-          {isError && <p className="text-sm text-red-600">{error?.message}</p>}
+
+          {isError && (
+            <p className="text-sm text-red-600 mt-2">
+              {error?.message || "Login failed"}
+            </p>
+          )}
 
           <button
             type="submit"
@@ -86,15 +104,19 @@ const {
             {isPending ? "Logging in..." : "Login"}
           </button>
         </form>
-        <div className="flex">
-        <h2>Don't have any account?</h2>
-        <h2 onClick={()=>navigate("/register")}
-          className="text-blue-600 cursor-pointer hover:underline">Register</h2>
+
+        <div className="flex justify-between items-center pt-4">
+          <span className="text-sm text-gray-600">Don't have an account?</span>
+          <button
+            onClick={() => navigate("/register")}
+            className="text-blue-600 text-sm hover:underline"
+          >
+            Register
+          </button>
         </div>
       </div>
     </div>
   );
-  console.log("Login payload:", data);
 }
 
 export default Login;

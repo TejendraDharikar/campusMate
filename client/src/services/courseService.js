@@ -3,7 +3,7 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const getCourses = async () => {
   try {
-    const res = await axios.get(`${BASE_URL}api/courses`);
+    const res = await axios.get(`${BASE_URL}/api/courses`);
     return res.data.data;
   } catch (err) {
     throw new Error(err.response?.data?.message || 'Failed to fetch courses');

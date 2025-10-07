@@ -5,11 +5,17 @@ export const useAuthStore = create(
   persist(
     (set) => ({
       user: null,
-      login: (userData) => set({ user: userData }),
+      login: (userData) =>{
+        console.log("Storing user in Zustand:", userData);
+        set({ user: userData }); },
       logout: () => set({ user: null }),
+      hasHydrated: false, // hydration flag
     }),
     {
-      name: 'auth-storage', // key in localStorage
+      name: 'auth-storage',
+      onRehydrateStorage: () => (state) => {
+        state.hasHydrated = true;
+      },
     }
   )
 );

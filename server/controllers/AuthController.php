@@ -3,7 +3,6 @@ require_once __DIR__ . '/../models/AuthModel.php';
 
 class AuthController {
     public static function login() {
-        header('Content-Type: application/json; charset=utf-8');
 
         $input = json_decode(file_get_contents("php://input"), true);
         $email = $input['email'] ?? '';

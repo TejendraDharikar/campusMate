@@ -9,12 +9,4 @@ $method = $_SERVER['REQUEST_METHOD'];
 if ($uri === '/api/register' && $method === 'POST') {
   UserController::register();
 }
-
-if ($uri === '/api/login' && $method === 'POST') {
-  AuthController::login();
-}
-
-if ($uri === '/api/attendance' && $method === 'POST') {
-  AttendanceController::getStudentAttendance();
-}
 ?>

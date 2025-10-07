@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . "/../models/CourseModel.php";
-header("Content-Type: application/json");
 
 class CourseController{
   public static function index(){

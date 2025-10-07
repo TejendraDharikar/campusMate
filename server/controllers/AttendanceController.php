@@ -3,7 +3,7 @@ require_once __DIR__ . '/../models/AttendanceModel.php';
 
 class AttendanceController {
   public static function getStudentAttendance() {
-    header("Content-Type: application/json");
+  
 
     $input = json_decode(file_get_contents("php://input"), true);
     $student_id = $input['student_id'] ?? null;
