@@ -2,21 +2,44 @@
 require_once __DIR__ . '/../models/AttendanceModel.php';
 
 class AttendanceController {
-  public static function getStudentAttendance() {
-  
 
-    $input = json_decode(file_get_contents("php://input"), true);
-    $student_id = $input['student_id'] ?? null;
-
-    if (!$student_id) {
-      echo json_encode(["error" => "Missing student_id"]);
-      exit;
-    }
-
-    $records = AttendanceModel::getByStudent($student_id);
-    echo json_encode($records);
+  public static function getAllStudentsAttendance(){
+    $records = AttendanceModel::fetchAllStudent();
+      echo json_encode($records);
   }
 
+
+
+  public static function getStudentAttendance() {
+  global $conn;
+
+  $input = json_decode(file_get_contents("php://input"), true);
+  $user_id = $input['user_id'] ?? null; 
+
+  if (!$user_id) {
+    echo json_encode(["error" => "Missing user_id"]);
+    exit;
+  }
+
+  // Resolve student_id from user_id
+  $stmt = $conn->prepare("SELECT id FROM students WHERE user_id = ?");
+  $stmt->bind_param("i", $user_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $student = $result->fetch_assoc();
+  $stmt->close();
+
+  if (!$student) {
+    echo json_encode(["error" => "No student found for user_id $user_id"]);
+    exit;
+  }
+
+  $student_id = $student['id'];
+
+  // Fetch attendance
+  $records = AttendanceModel::getByStudent($student_id);
+  echo json_encode($records);
+}
 
 
   //  adding attendence part

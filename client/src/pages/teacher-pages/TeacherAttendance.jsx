@@ -1,18 +1,18 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../context/useAuthStore';
-import { useAttendance } from '../../hooks/useAttendance';
+import { useAllAttendance} from '../../hooks/useAttendance';
 
 const TeacherAttendance = () => {
   const navigate = useNavigate();
   const { user } = useAuthStore();
-  const { data, isLoading, isError } = useAttendance(user?.id);
+  const { data:attendanceRecords, isLoading, isError } = useAllAttendance();
 
-    console.log("Attendance data:", data);
+    console.log("Attendance data:",attendanceRecords);
 
 
-  if (isLoading) return <p className="text-blue-600">Loading attendance...</p>;
-  if (isError) return <p className="text-red-600">Error loading attendance.</p>;
+  if (isLoading) return <p className="text-blue-600">Loading All attendance...</p>;
+  if (isError) return <p className="text-red-600">Error loading All attendance.</p>;
 
   return (
     <div className="space-y-6">
@@ -21,15 +21,17 @@ const TeacherAttendance = () => {
         <thead className="bg-blue-100 text-left">
           <tr>
             <th className="p-3">Date</th>
+            <th className='p-3'>Student</th>
             <th className="p-3">Course</th>
             <th className="p-3">Status</th>
             <th className="p-3">Action</th>
           </tr>
         </thead>
         <tbody>
-          {data.map((record, index) => (
+          {attendanceRecords.map((record, index) => (
             <tr key={index} className="border-t hover:bg-blue-50">
               <td className="p-3">{record.date}</td>
+              <td className="p-3">{record.student}</td>
               <td className="p-3">{record.course}</td>
               <td className={`p-3 font-semibold ${
                 record.status === "Present" ? "text-green-600" :
@@ -38,8 +40,8 @@ const TeacherAttendance = () => {
               }`}>
                 {record.status}
               </td>
-              <td><button onClick={navigate('/attendanceForm')}>update</button></td>
-              <td><button onClick={navigate('/attendanceForm')}>delete</button></td>
+              <td><button onClick={() => navigate(`/attendanceForm/${record.id}`)}>Update</button></td>
+              <td><button onClick={()=>handleDelete(record.id)}>delete</button></td>
             </tr>
           ))}
         </tbody>

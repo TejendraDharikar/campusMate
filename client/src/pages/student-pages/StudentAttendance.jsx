@@ -3,6 +3,8 @@ import { useAuthStore } from "../../context/useAuthStore";
 
 const StudentAttendance = () => {
   const { user } = useAuthStore();
+  console.log("🔍 Auth user:", user);
+
   const { data, isLoading, isError } = useAttendance(user?.id);
 
     console.log("Attendance data:", data);
@@ -10,6 +12,9 @@ const StudentAttendance = () => {
 
   if (isLoading) return <p className="text-blue-600">Loading attendance...</p>;
   if (isError) return <p className="text-red-600">Error loading attendance.</p>;
+if (!Array.isArray(data)) return <p className="text-red-600">Invalid attendance response</p>;
+if (data.length === 0) return <p>No attendance records found</p>;
+
 
   return (
     <div className="space-y-6">

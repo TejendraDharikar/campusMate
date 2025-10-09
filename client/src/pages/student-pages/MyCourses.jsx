@@ -1,39 +1,39 @@
-import { useEffect, useState } from "react";
-import {  getCourses } from "../../services/courseService";
+import {useAuthStore} from "../../context/useAuthStore"
+import { useStudentCourses } from "../../hooks/useStudentCourses";
 
 
 const MyCourses = () => {
-  const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const {user} = useAuthStore();
+  const {data,isPending,isError}=useStudentCourses(user?.id);
 
-  useEffect(() => {
-    getCourses()
-      .then(setCourses)
-      .catch(err => setError(err.message))
-      .finally(() => setLoading(false));
-  }, []);
+   console.log("👤 Auth user:", user); // Check user.id
+  console.log("📤 Fetching courses for studentId:", user?.id);
+  console.log("📘 Course data:", data); // Final result
 
-  if (loading) return <p>Loading courses...</p>;
-  if (error) return <p>Error: {error}</p>;
 
-  return (
-    <div>
-      <h2>Courses</h2>
-     {Array.isArray(courses) && courses.length > 0 ? (
-  courses.map(course => (
-    <div key={course.id}>
-      <h3>{course.title}</h3>
-      <p>{course.description}</p>
+  if (isPending) return <p>Loading your courses...</p>;
+  if (isError) return <p>error loading your courses</p>;
+
+ return (
+    <div className="p-4">
+      <h2 className="text-xl font-bold mb-4">📘 My Courses</h2>
+      {data.length === 0 ? (
+        <p>No courses enrolled yet.</p>
+      ) : (
+        <ul className="space-y-4">
+          {data.map((course, idx) => (
+            <li key={idx} className="border p-4 rounded shadow">
+              <h3 className="text-lg font-semibold">{course.course_name}</h3>
+              <p>{course.description}</p>
+              <p>Credits: {course.credits}</p>
+              <p>Teacher: {course.teacher_name}</p>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
-  ))
-) : (
-  <p>No courses found or data is invalid.</p>
-)}
 
-    </div>
-  );
-
+  )
 }
 
 export default MyCourses

@@ -1,10 +1,22 @@
 import axios from "axios";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const fetchAttendance = async (studentId) => {
+
+export const fetchAllAttendance = async ()=>{
+   try {
+    const res = await axios.get(`${BASE_URL}/api/attendance/all`);
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response?.data?.message || 'Failed to add attendance');
+  }
+};
+
+
+
+export const fetchAttendance = async (userid) => {
   try {
-    const res = await axios.post(`${BASE_URL}/api/attendance/get`, {
-      student_id: studentId,
+    const res = await axios.post(`${BASE_URL}/api/attendance/student`, {
+      user_id: userid,
     });
     return res.data;
   } catch (err) {

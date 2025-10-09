@@ -1,10 +1,22 @@
 import axios from 'axios';
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const getCourses = async () => {
+
+export const getAllCourses = async () => {
   try {
-    const res = await axios.get(`${BASE_URL}/api/courses`);
-    return res.data.data;
+    const res = await axios.get(`${BASE_URL}/api/courses/all`);
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response?.data?.message || 'Failed to fetch courses');
+  }}
+
+export const getCourses = async (studentId) => {
+  try {
+    const res = await axios.post(`${BASE_URL}/api/courses/student`,{
+      student_id:studentId,
+    });
+    console.log("fetched successfully",res.data);
+    return res.data;
   } catch (err) {
     throw new Error(err.response?.data?.message || 'Failed to fetch courses');
   }
