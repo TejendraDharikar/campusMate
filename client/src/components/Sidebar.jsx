@@ -15,6 +15,7 @@ const Sidebar = () => {
       { label: "Dashboard", path: "/teacher-dashboard" },
       { label: "Manage Classes", path: "/teacher-classes" },
       { label: "Assignments", path: "/teacher-assignments" },
+      { label: "Manage Attendance", path: "/teacher-attendance" },
     ],
     admin: [
       { label: "Dashboard", path: "/admin-dashboard" },

@@ -6,8 +6,10 @@ import TeacherDashboard from "./pages/teacher-pages/TeacherDashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Register from "./pages/other-pages/Register";
 import DashboardLayout from "./components/DashboardLayout";
-import StudentAttendance from "./pages/student-pages/StudentAttendance";
 import MyCourses from "./pages/student-pages/MyCourses";
+import StudentAttendance from "./pages/student-pages/StudentAttendance";
+import TeacherAttendance from "./pages/teacher-pages/TeacherAttendance";
+
 
 const router = createBrowserRouter([
   {
@@ -53,6 +55,13 @@ element:(
         </DashboardLayout>
       </ProtectedRoute>
     ),
+  },{
+path:"/teacher-attendance",
+element:(
+ <DashboardLayout>
+        <TeacherAttendance />
+        </DashboardLayout>
+),
   },
  
   // {

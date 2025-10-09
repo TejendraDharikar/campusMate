@@ -29,5 +29,48 @@ class AttendanceModel {
     $stmt->close();
     return $records;
   }
+
+
+  // add attendance for student
+    
+  public static function addByStudent($student_id,$course_id,$date,$status){
+    global $conn;
+
+    $query="INSERT INTO attendance (student_id,course_id,date,status) VALUES (?,?,?,?)";
+    $stmt = $conn->prepare($query);
+    $stmt -> bind_param("iiss",$student_id,$course_id,$date,$status);
+
+    if ($stmt->execute()){
+      $insertedId = $stmt->insert_id;
+      $stmt->close();
+      return["success"=>true,"id"=>$insertedId];
+    }else{
+      $stmt->close();
+      return["error"=>"insert failed"];
+    }
+  }
+
+
+
+  public static function updateById($id,$status){
+ global $conn;
+  $stmt = $conn->prepare("UPDATE attendance SET status = ? WHERE id = ?");
+  $stmt->bind_param("si", $status, $id);
+  $success = $stmt->execute();
+  $stmt->close();
+  return $success ? ["success" => true] : ["error" => "Update failed"];
+
+  }
+
+
+public static function deleteById($id){
+ global $conn;
+  $stmt = $conn->prepare("DELETE FROM attendance WHERE id = ?");
+  $stmt->bind_param("i", $id);
+  $success = $stmt->execute();
+  $stmt->close();
+  return $success ? ["success" => true] : ["error" => "Delete failed"];
+  }
+  
 }
 ?>
