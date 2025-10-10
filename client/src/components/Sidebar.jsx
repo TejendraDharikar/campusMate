@@ -14,6 +14,7 @@ const Sidebar = () => {
     teacher: [
       { label: "Dashboard", path: "/teacher-dashboard" },
       { label: "Manage Classes", path: "/teacher-classes" },
+      {label: " Student Courses", path:"/manage-courses"},
       { label: "Assignments", path: "/teacher-assignments" },
       { label: "Manage Attendance", path: "/teacher-attendance" },
     ],

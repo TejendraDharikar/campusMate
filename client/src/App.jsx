@@ -9,6 +9,7 @@ import DashboardLayout from "./components/DashboardLayout";
 import MyCourses from "./pages/student-pages/MyCourses";
 import StudentAttendance from "./pages/student-pages/StudentAttendance";
 import TeacherAttendance from "./pages/teacher-pages/TeacherAttendance";
+import ManageCourses from "./pages/teacher-pages/ManageCourses";
 
 
 const router = createBrowserRouter([
@@ -55,7 +56,16 @@ element:(
         </DashboardLayout>
       </ProtectedRoute>
     ),
-  },{
+  },
+   {
+path:"/manage-courses",
+element:(
+ <DashboardLayout>
+        <ManageCourses />
+        </DashboardLayout>
+),
+  },
+  {
 path:"/teacher-attendance",
 element:(
  <DashboardLayout>

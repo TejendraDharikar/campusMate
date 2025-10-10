@@ -1,11 +1,49 @@
 <?php
 
 class CourseModel{
-  public static function getall(){
+
+  // yo helper ho yesle user_id lai teacher_id ma convert garxa
+public static function getTeacherProfileId($user_id) {
     global $conn;
-    $stmt=$conn->prepare("SELECT * FROM students_courses");
+    $stmt = $conn->prepare("SELECT id FROM teacher_profiles WHERE user_id = ?");
+    $stmt->bind_param("i", $user_id);
     $stmt->execute();
-    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $result = $stmt->get_result()->fetch_assoc();
+    return $result['id'] ?? null;
+}
+
+public static function getStudentId($user_id) {
+    global $conn;
+    $stmt = $conn->prepare("SELECT id FROM students WHERE user_id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+    return $result['id'] ?? null;
+}
+
+
+  public static function getall($teacher_id){
+    global $conn;
+error_log("🔍 Querying with teacher_id: " . $teacher_id);
+
+    $stmt=$conn->prepare("SELECT 
+    sc.id AS student_id,
+    s.name AS student_name,
+    s.email,
+    c.id AS course_id,
+    c.title AS course_name
+FROM students_courses sc
+JOIN courses c ON sc.course_id = c.id
+JOIN students s ON sc.student_id = s.id
+WHERE c.teacher_id = ? ;");
+    $stmt->bind_param("i",$teacher_id);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    
+    error_log("🔍 Query returned " . count($result) . " rows");
+    error_log("🔍 Result: " . json_encode($result));
+    
+    return $result;
   }
 
     public static function getById($student_id){

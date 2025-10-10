@@ -3,10 +3,29 @@ require_once __DIR__ . "/../models/CourseModel.php";
 
 class CourseController{
  
-  public static function allStudentCourses(){
+public static function allStudentCourses() {
+  header('Content-Type: application/json');
+
+    $input = json_decode(file_get_contents("php://input"), true);
+    $user_id = $input['teacher_id'] ?? null;
+
+    if (!$user_id) {
+        echo json_encode(["error" => "Missing teacher id"]);
+        return;
+    }
+
+      $teacher_profile_id=CourseModel::getTeacherProfileId($user_id);
     
-    echo json_encode(CourseModel::getall());
-  }
+    if (!$teacher_profile_id) {
+      error_log("no teacher profile found for user_id".$user_id);
+        echo json_encode(["error" => "No teacher profile found for user"]);
+        return;
+    }
+
+    //  Fetch student courses using teacher_profile.id
+    $courses = CourseModel::getall($teacher_profile_id);
+    echo json_encode($courses);
+}
 
 
 
@@ -19,9 +38,16 @@ class CourseController{
         return;
     }
 
-    error_log("📥 Received student_id: " . $student_id);
+    $mystudent_id=CourseModel::getStudentId($student_id);
 
-    $result = CourseModel::getById($student_id);
+    if (!$mystudent_id) {
+      error_log("no teacher profile found for user_id".$student_id);
+        echo json_encode(["error" => "No teacher profile found for user"]);
+        return;
+    };
+
+
+    $result = CourseModel::getById($mystudent_id);
     error_log("📤 Returning courses: " . json_encode($result)); // ✅ Add this
 
     echo json_encode($result);
