@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/../models/CourseModel.php";
+require_once __DIR__ . "/../middleware/converterMiddleware.php";
 
 class CourseController{
  
@@ -14,16 +15,17 @@ public static function allStudentCourses() {
         return;
     }
 
-      $teacher_profile_id=CourseModel::getTeacherProfileId($user_id);
+      $teacher_id = ConverterMiddleware::toTeacherId($user_id);
+
     
-    if (!$teacher_profile_id) {
+    if (!$teacher_id) {
       error_log("no teacher profile found for user_id".$user_id);
         echo json_encode(["error" => "No teacher profile found for user"]);
         return;
     }
 
     //  Fetch student courses using teacher_profile.id
-    $courses = CourseModel::getall($teacher_profile_id);
+    $courses = CourseModel::getall($teacher_id);
     echo json_encode($courses);
 }
 
@@ -31,23 +33,24 @@ public static function allStudentCourses() {
 
  public static function studentCourses() {
     $input = json_decode(file_get_contents("php://input"), true);
-    $student_id = $input['student_id'] ?? null;
+    $user_id = $input['student_id'] ?? null;
 
-    if (!$student_id) {
+    if (!$user_id) {
         echo json_encode(["error" => "Missing student id"]);
         return;
     }
 
-    $mystudent_id=CourseModel::getStudentId($student_id);
+   $student_id = ConverterMiddleware::toStudentId($user_id);
 
-    if (!$mystudent_id) {
+
+    if (!$student_id) {
       error_log("no teacher profile found for user_id".$student_id);
         echo json_encode(["error" => "No teacher profile found for user"]);
         return;
     };
 
 
-    $result = CourseModel::getById($mystudent_id);
+    $result = CourseModel::getById($student_id);
     error_log("📤 Returning courses: " . json_encode($result)); // ✅ Add this
 
     echo json_encode($result);

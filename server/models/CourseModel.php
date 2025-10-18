@@ -1,26 +1,8 @@
 <?php
 
 class CourseModel{
-
-  // yo helper ho yesle user_id lai teacher_id ma convert garxa
-public static function getTeacherProfileId($user_id) {
-    global $conn;
-    $stmt = $conn->prepare("SELECT id FROM teacher_profiles WHERE user_id = ?");
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result()->fetch_assoc();
-    return $result['id'] ?? null;
-}
-
-public static function getStudentId($user_id) {
-    global $conn;
-    $stmt = $conn->prepare("SELECT id FROM students WHERE user_id = ?");
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result()->fetch_assoc();
-    return $result['id'] ?? null;
-}
-
+  
+// modeling function haru yaha xa 
 
   public static function getall($teacher_id){
     global $conn;

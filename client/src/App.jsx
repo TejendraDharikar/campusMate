@@ -10,6 +10,8 @@ import MyCourses from "./pages/student-pages/MyCourses";
 import StudentAttendance from "./pages/student-pages/StudentAttendance";
 import TeacherAttendance from "./pages/teacher-pages/TeacherAttendance";
 import ManageCourses from "./pages/teacher-pages/ManageCourses";
+import ManageGrades from "./pages/teacher-pages/ManageGrades";
+import MyGrades from "./pages/student-pages/MyGrades";
 
 
 const router = createBrowserRouter([
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
         </DashboardLayout>
       </ProtectedRoute>
     ),
+  },
+  {
+path:"/student-grade",
+element:(
+ <DashboardLayout>
+        <MyGrades/>
+        </DashboardLayout>
+),
   },
    {
 path:"/student-attendance",
@@ -62,6 +72,14 @@ path:"/manage-courses",
 element:(
  <DashboardLayout>
         <ManageCourses />
+        </DashboardLayout>
+),
+  },
+  {
+path:"/teacher-grade",
+element:(
+ <DashboardLayout>
+        < ManageGrades/>
         </DashboardLayout>
 ),
   },

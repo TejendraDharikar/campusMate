@@ -7,5 +7,6 @@ require_once __DIR__ . "/routes/courseRoutes.php";
 require_once __DIR__ . "/routes/attendanceRoutes.php";
 require_once __DIR__ . "/routes/userRoutes.php";
 require_once __DIR__ . "/routes/authRoutes.php";
+require_once __DIR__ . "/routes/gradeRoutes.php";
 
 ?>
