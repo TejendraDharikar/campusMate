@@ -14,10 +14,10 @@ const Sidebar = () => {
     ],
     teacher: [
       { label: "Dashboard", path: "/teacher-dashboard" },
-      { label: "Manage Classes", path: "/teacher-classes" },
+      // { label: "Manage Classes", path: "/teacher-classes" },
       {label: " Student Courses", path:"/manage-courses"},
        {label:"Manage Grades", path: "/teacher-grade"},
-      { label: "Assignments", path: "/teacher-assignments" },
+      // { label: "Assignments", path: "/teacher-assignments" },
       { label: "Manage Attendance", path: "/teacher-attendance" },
     ],
     admin: [

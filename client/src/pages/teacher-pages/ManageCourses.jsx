@@ -27,35 +27,55 @@ const ManageCourses = () => {
   }
 
   return (
-    <div className="p-4">
+    <div className="space-y-6">
       <h2 className="text-2xl font-bold mb-4">Students Enrolled in Your Courses</h2>
       
       {studCourses.length === 0 ? (
         <p className="text-gray-600">No students enrolled in your courses yet</p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-200 rounded-lg">
-            <thead className="bg-gray-100">
+        <div className="overflow-x-auto ">
+
+           
+<div className='flex justify-between'>
+  <p className="ml-4 mt-3">Total: {studCourses.length} enrollment(s)</p>
+   <button 
+      className="border-2 border-green-500 px-4 py-2 rounded 
+      text-green-500 font-semibold hover:bg-green-500 hover:text-white mr-5 mb-2"
+      >Add Grade</button></div>
+          <table className="min-w-full shadow rounded bg-white">
+            <thead className="bg-blue-100 text-left">
               <tr>
-                <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Student Name</th>
-                <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Email</th>
-                <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Course</th>
+                <th className="p-3">Student Name</th>
+                <th className="p-3">Email</th>
+                <th className="p-3">Course</th>
+                <th className="p-3 text-center">Action</th>
               </tr>
             </thead>
             <tbody>
               {studCourses.map((c, index) => (
                 <tr 
                   key={`${c.student_id}-${c.course_id}-${index}`} 
-                  className="border-t border-gray-200 hover:bg-gray-50"
+                  className="border-t hover:bg-blue-50"
                 >
-                  <td className="px-4 py-2 text-sm text-gray-800">{c.student_name || 'N/A'}</td>
-                  <td className="px-4 py-2 text-sm text-gray-800">{c.email || 'N/A'}</td>
-                  <td className="px-4 py-2 text-sm text-gray-800">{c.course_name || 'N/A'}</td>
+                  <td className="p-3">{c.student_name || 'N/A'}</td>
+                  <td className="p-3">{c.email || 'N/A'}</td>
+                  <td className="p-3">{c.course_name || 'N/A'}</td>
+                  <td className='flex p-2 justify-evenly mr-2 mt-2 mb-2 font-semibold '>
+                <button onClick={() => navigate(`/attendanceForm/${record.id}`)}
+                  className='border-2 rounded border-blue-500 px-2 py-1 
+                   text-blue-500 hover:bg-blue-500 hover:text-white'
+                  >Update</button>
+              <button onClick={()=>handleDelete(record.id)}
+                className='border-2 rounded border-red-500 px-2 py-1 
+                   text-red-500 hover:bg-red-500 hover:text-white'
+                   >delete</button>
+                   
+              </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <p className="mt-2 text-sm text-gray-600">Total: {studCourses.length} enrollment(s)</p>
+         
         </div>
       )}
     </div>

@@ -8,10 +8,12 @@ export const fetchStudentGrades = async (student_id) => {
   return res.data;
 };
 
-export const fetchAllStudentGrades = async (user_id) => {
+export const fetchAllStudentGrades = async (teacher_id) => {
   const res = await axios.post(`${BASE_URL}/api/grade/all`,{
       teacher_id,
     });
+    console.log("fetch data:",teacher_id);
+    
   return res.data;
 };
 

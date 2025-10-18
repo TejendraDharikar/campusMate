@@ -15,8 +15,14 @@ const TeacherAttendance = () => {
   if (isError) return <p className="text-red-600">Error loading All attendance.</p>;
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-blue-800">Attendance Records</h2>
+    <div>
+      <h2 className="text-2xl font-bold text-blue-800 text-center mt-2">Attendance Records</h2>
+      <div className='text-right'> <button 
+      className="border-2 border-green-500 px-4 py-2 rounded 
+      text-green-500 font-semibold hover:bg-green-500 hover:text-white mr-5 mb-2"
+      >Add Grade</button></div>
+     
+
       <table className="w-full bg-white shadow rounded">
         <thead className="bg-blue-100 text-left">
           <tr>
@@ -24,7 +30,7 @@ const TeacherAttendance = () => {
             <th className='p-3'>Student</th>
             <th className="p-3">Course</th>
             <th className="p-3">Status</th>
-            <th className="p-3">Action</th>
+            <th className="p-3 text-center">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -40,8 +46,17 @@ const TeacherAttendance = () => {
               }`}>
                 {record.status}
               </td>
-              <td><button onClick={() => navigate(`/attendanceForm/${record.id}`)}>Update</button></td>
-              <td><button onClick={()=>handleDelete(record.id)}>delete</button></td>
+              <td className='flex p-3 justify-evenly mr-2 mt-2 font-semibold '>
+                <button onClick={() => navigate(`/attendanceForm/${record.id}`)}
+                  className='border-2 rounded border-blue-500 px-2 py-1 
+                   text-blue-500 hover:bg-blue-500 hover:text-white'
+                  >Update</button>
+              <button onClick={()=>handleDelete(record.id)}
+                className='border-2 rounded border-red-500 px-2 py-1 
+                   text-red-500 hover:bg-red-500 hover:text-white'
+                   >delete</button>
+              </td>
+             
             </tr>
           ))}
         </tbody>

@@ -20,6 +20,12 @@ export const useAllStudentGrades=(teacher_id)=>{
     queryKey:["allStudentGrades",teacher_id],
     queryFn:()=>fetchAllStudentGrades(teacher_id),
      enabled: !!teacher_id,
+     onError :(err)=>{
+       console.error("failed to fetch all student grades",err);
+      console.log("hook data:",teacher_id);
+      }
+     
+     
   
   })
 }
