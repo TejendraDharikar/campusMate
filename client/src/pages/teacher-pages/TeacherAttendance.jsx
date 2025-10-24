@@ -1,12 +1,27 @@
-import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../context/useAuthStore';
 import { useAllAttendance} from '../../hooks/useAttendance';
+import { useAttendanceMutations } from '../../hooks/useAttendanceMutations';
+
 
 const TeacherAttendance = () => {
   const navigate = useNavigate();
   const { user } = useAuthStore();
-  const { data:attendanceRecords, isLoading, isError } = useAllAttendance();
+  const { deleteAttendance } = useAttendanceMutations();
+  const { data:attendanceRecords,refetch, isLoading, isError } = useAllAttendance();
+
+const handleDelete = (id) => {
+  if (confirm("Are you sure you want to delete this record?")) {
+    deleteAttendance(id,
+      { onSuccess: () => {
+        refetch();
+      } }
+    );
+  }
+};
+
+
+console.log("Logged in user:", user);
 
     console.log("Attendance data:",attendanceRecords);
 
@@ -20,7 +35,8 @@ const TeacherAttendance = () => {
       <div className='text-right'> <button 
       className="border-2 border-green-500 px-4 py-2 rounded 
       text-green-500 font-semibold hover:bg-green-500 hover:text-white mr-5 mb-2"
-      >Add Grade</button></div>
+      onClick={() => navigate('/attendanceForm')}
+      >Add Attendance</button></div>
      
 
       <table className="w-full bg-white shadow rounded">

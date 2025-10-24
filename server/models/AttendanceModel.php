@@ -77,6 +77,7 @@ public static function fetchAllStudent() {
       $stmt->close();
       return["success"=>true,"id"=>$insertedId];
     }else{
+       error_log("SQL Error: " . $stmt->error);
       $stmt->close();
       return["error"=>"insert failed"];
     }

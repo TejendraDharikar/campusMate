@@ -12,6 +12,7 @@ import TeacherAttendance from "./pages/teacher-pages/TeacherAttendance";
 import ManageCourses from "./pages/teacher-pages/ManageCourses";
 import ManageGrades from "./pages/teacher-pages/ManageGrades";
 import MyGrades from "./pages/student-pages/MyGrades";
+import AttendanceForm from "./components/AttendanceForm";
 
 
 const router = createBrowserRouter([
@@ -91,7 +92,22 @@ element:(
         </DashboardLayout>
 ),
   },
- 
+  {
+path:"/attendanceForm",
+element:(
+ <DashboardLayout>
+        <AttendanceForm />
+        </DashboardLayout>
+),
+  },
+ {
+path:"/attendanceForm/:id",
+element:(
+ <DashboardLayout>
+        <AttendanceForm />
+        </DashboardLayout>
+),
+  },
   // {
   //   path: "/admin",
   //   element: (

@@ -34,6 +34,8 @@ class AttendanceController {
   // ➕ Add attendance
   public static function addStudentAttendance() {
     $data = json_decode(file_get_contents("php://input"), true);
+    
+   error_log("Incoming payload: " . json_encode($data));
 
     $student_id = $data['student_id'] ?? null;
     $course_id = $data['course_id'] ?? null;

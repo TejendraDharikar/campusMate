@@ -5,11 +5,21 @@ export const useAttendanceMutations = (studentId)=>{
   const queryClient = useQueryClient();
 
   const add = useMutation({
-    mutationFn: ({ courseId, date, status }) =>
+    mutationFn: ({studentId, courseId, date, status }) =>
       addAttendance(studentId, courseId, date, status),
-    onSuccess: () => {
+    onSuccess: (data,variables) => {
+      const { studentId, courseId, date, status } = variables;
+      console.log("hook data:",studentId, courseId, date, status);
       queryClient.invalidateQueries({ queryKey: ["attendance", studentId] });
+
+      alert("Attendance added successfully");
+      
     },
+    onError: (error) => {
+    console.error("Error adding attendance:", error);
+    alert("Failed to add attendance. Please try again.");
+  },
+
   });
 
   const update = useMutation({

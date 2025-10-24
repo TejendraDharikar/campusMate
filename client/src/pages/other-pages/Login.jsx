@@ -21,10 +21,10 @@ function Login() {
   const { mutate, isError, isPending, error } = useMutation({
     mutationFn: loginUser,
     onSuccess: (user) => {
-      console.log("✅ Mutation success:", user);
+      console.log(" Mutation success:", user);
 
       if (!user || typeof user.role !== "string") {
-        console.warn("⚠️ Role is missing or invalid:", user);
+        console.warn(" Role is missing or invalid:", user);
         return;
       }
 
@@ -33,16 +33,16 @@ function Login() {
       localStorage.setItem('name', user.name);
 
       const targetRoute = `/${user.role}-dashboard`;
-      console.log("🚀 Navigating to:", targetRoute);
+      console.log(" Navigating to:", targetRoute);
       navigate(targetRoute);
     },
     onError: (err) => {
-      console.error("❌ Login failed:", err.message);
+      console.error(" Login failed:", err.message);
     }
   });
 
   const onSubmit = (formData) => {
-    console.log("📨 Form submitted with:", formData);
+    console.log("Form submitted with:", formData);
     mutate({
       email: formData.email,
       password: formData.password,

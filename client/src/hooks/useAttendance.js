@@ -27,7 +27,7 @@ export const useAttendance = (studentId) => {
       return fetchAttendance(studentId)},
     enabled: !!studentId,
     onError: (error) => {
-  console.error("Attendance fetch failed:", error);
+  console.error("Attendance fetch failed:", error.message);
 }
   });
 };

@@ -27,6 +27,8 @@ export const fetchAttendance = async (userid) => {
 
 export const addAttendance = async (studentId,courseId,date,status)=>{
    try {
+     console.log("Sending to backend:", { studentId, courseId, date, status });
+
     const res = await axios.post(`${BASE_URL}/api/attendance/add`, {
       student_id: studentId,
       course_id: courseId,
@@ -56,6 +58,7 @@ export const updateAttendance = async (Id,status)=>{
 export const deleteAttendance = async (Id)=>{
    try {
     const res = await axios.delete(`${BASE_URL}/api/attendance/delete?id=${Id}`);
+    
     return res.data;
   } catch (err) {
     throw new Error(err.response?.data?.message || 'Failed to delete attendance');
