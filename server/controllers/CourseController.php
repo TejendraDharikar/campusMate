@@ -61,7 +61,24 @@ public static function allStudentCourses() {
   //   $success=CourseModel::create($data);
   //   echo json_encode(["success=>$success"]);
   // }
+
+
+  public static function deleteCourse() {
+   parse_str($_SERVER['QUERY_STRING'], $params);
+    $student_id = $params['student_id'] ?? null;
+
+    if (!$student_id) {
+        echo json_encode(["error" => "Missing id"]);
+        return;
+    }
+
+    $success = CourseModel::delete($student_id);
+    echo json_encode(["success" => $success]);
+}
+
 }
 
 // add update and delete methods
+
+
 ?>

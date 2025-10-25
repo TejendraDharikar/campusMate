@@ -10,8 +10,7 @@ export const useAttendanceMutations = (studentId)=>{
     onSuccess: (data,variables) => {
       const { studentId, courseId, date, status } = variables;
       console.log("hook data:",studentId, courseId, date, status);
-      queryClient.invalidateQueries({ queryKey: ["attendance", studentId] });
-
+      queryClient.invalidateQueries({ queryKey: ["allAttendance"] });
       alert("Attendance added successfully");
       
     },
@@ -25,14 +24,14 @@ export const useAttendanceMutations = (studentId)=>{
   const update = useMutation({
     mutationFn: ({ id, status }) => updateAttendance(id, status),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["attendance", studentId] });
+      queryClient.invalidateQueries({ queryKey: ["allAttendance"] });
     },
   });
 
   const remove = useMutation({
     mutationFn: (id) => deleteAttendance(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["attendance", studentId] });
+      queryClient.invalidateQueries({ queryKey: ["allAttendance"] });
     },
   });
 

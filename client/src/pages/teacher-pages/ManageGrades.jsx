@@ -1,5 +1,6 @@
 import { useAuthStore } from "../../context/useAuthStore"
 import { useAllStudentGrades } from "../../hooks/useGrades";
+import { deleteGrade } from "../../services/gradeService";
 
 
 const ManageGrades = () => {
@@ -13,6 +14,17 @@ console.log("all student grades data:",grades);
   if(isPending) return <p>parkhinu hos students grade load vairaxa....</p>;
   if(isError) return <p>error aayo students grade load garda</p>;
  
+
+ const handleDelete=(grade_id)=>{
+    if(confirm("confirm delete dardim grade record?")){
+      deleteGrade(grade_id,{
+        onSuccess:()=>{
+          refetch();
+        }
+    });
+  }
+}
+
   return (
     <div className="space-y-6 bg-gradient-to-br from-green-50 to-white rounded-lg shadow-md">
     <h2 className="text-2xl font-bold text-green-800 text-center pt-8"> All student grades </h2>
@@ -45,11 +57,11 @@ console.log("all student grades data:",grades);
             <td className="p-3">{val.score}</td>
             <td className="p-3">{val.remarks}</td>
              <td className='flex p-3 justify-evenly mr-2 mt-2 mb-2 font-semibold '>
-                <button onClick={() => navigate(`/attendanceForm/${record.id}`)}
+                <button onClick={() => navigate(`/attendanceForm/${val.id}`)}
                   className='border-2 rounded border-blue-500 px-2 py-1 
                    text-blue-500 hover:bg-blue-500 hover:text-white'
                   >Update</button>
-              <button onClick={()=>handleDelete(record.id)}
+              <button onClick={()=>handleDelete(val.grade_id)}
                 className='border-2 rounded border-red-500 px-2 py-1 
                    text-red-500 hover:bg-red-500 hover:text-white'
                    >delete</button>

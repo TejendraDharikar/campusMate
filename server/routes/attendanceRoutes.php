@@ -11,7 +11,7 @@ elseif ($uri === '/api/attendance/student' && $method === 'POST') {
   AttendanceController::getStudentAttendance();
 }elseif($uri === '/api/attendance/add' && $method === 'POST'){
   AttendanceController::addStudentAttendance();
-}elseif($uri === '/api/attendance/update' && $method === 'PUT'){
+}elseif($uri === '/api/attendance/update' && $method === 'PATCH'){
   AttendanceController::updateStudentAttendance();
 }elseif($uri === '/api/attendance/delete' && $method === 'DELETE'){
   AttendanceController::deleteStudentAttendance();

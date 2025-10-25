@@ -31,6 +31,14 @@ export const fetchAllStudentGrades = async (teacher_id) => {
 //   });
 // };
 
-// export const deleteGrade = async (grade_id) => {
-//   return axios.get(`${API_URL}?action=destroy&grade_id=${grade_id}`);
-// };
+export const deleteGrade = async (grade_id) => {
+  try {
+    const res = await axios.delete(`${BASE_URL}/api/grade/delete?grade_id=${grade_id}`);
+    
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response?.data?.message || 'Failed to delete grade');
+  }
+};
+
+

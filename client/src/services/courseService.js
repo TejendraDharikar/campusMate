@@ -24,27 +24,28 @@ export const getCourses = async (studentId) => {
   }
 };
 
-export const addCourse = async (courseData) => {
-  try {
-    const res = await axios.post(`${BASE_URL}api/courses`, courseData);
-    return res.data;
-  } catch (err) {
-    throw new Error(err.response?.data?.message || 'Course creation failed');
-  }
-};
+// export const addCourse = async (courseData) => {
+//   try {
+//     const res = await axios.post(`${BASE_URL}api/courses`, courseData);
+//     return res.data;
+//   } catch (err) {
+//     throw new Error(err.response?.data?.message || 'Course creation failed');
+//   }
+// };
 
-export const updateCourse = async (id, courseData) => {
-  try {
-    const res = await axios.put(`${BASE_URL}api/courses/${id}`, courseData);
-    return res.data;
-  } catch (err) {
-    throw new Error(err.response?.data?.message || 'Course update failed');
-  }
-};
+// export const updateCourse = async (id, courseData) => {
+//   try {
+//     const res = await axios.put(`${BASE_URL}api/courses/${id}`, courseData);
+//     return res.data;
+//   } catch (err) {
+//     throw new Error(err.response?.data?.message || 'Course update failed');
+//   }
+// };
 
-export const deleteCourse = async (id) => {
+export const deleteCourse = async (student_id) => {
   try {
-    const res = await axios.delete(`${BASE_URL}api/courses/${id}`);
+    const res = await axios.delete(`${BASE_URL}/api/courses/delete?student_id=${student_id}`);
+    console.log("deleted successfully",res.data);
     return res.data;
   } catch (err) {
     throw new Error(err.response?.data?.message || 'Course deletion failed');

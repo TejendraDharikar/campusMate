@@ -8,8 +8,8 @@ import { useAttendance } from '../hooks/useAttendance';
 const AttendanceForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const isEdit = Boolean(id);
-
+  const isEdit = (id);
+console.log("Editing attendance ID:", id);
   const {
     register,
     handleSubmit,
@@ -20,6 +20,7 @@ const AttendanceForm = () => {
   const { addAttendance, updateAttendance } = useAttendanceMutations();
 
   const { data: existing, isLoading } = useAttendance(id);
+console.log(" Existing attendance data:", existing);
 
   useEffect(() => {
     if (isEdit && existing) {

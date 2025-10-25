@@ -80,19 +80,19 @@ class GradeController {
   //   echo json_encode(["success" => $success]);
   // }
 
-  // // ❌ Delete grade
-  // public static function destroy() {
-  //   parse_str($_SERVER['QUERY_STRING'], $params);
-  //   $grade_id = $params['grade_id'] ?? null;
+  // ❌ Delete grade
+  public static function delete() {
+    parse_str($_SERVER['QUERY_STRING'], $params);
+    $grade_id = $params['grade_id'] ?? null;
 
-  //   if (!$grade_id) {
-  //     echo json_encode(["error" => "Missing grade_id"]);
-  //     return;
-  //   }
+    if (!$grade_id) {
+      echo json_encode(["error" => "Missing grade_id"]);
+      return;
+    }
 
-  //   $success = GradeModel::delete($grade_id);
-  //   echo json_encode(["success" => $success]);
-  // }
+    $success = GradeModel::delete($grade_id);
+    echo json_encode(["success" => $success]);
+  }
 }
 
 ?>

@@ -57,7 +57,14 @@ ORDER BY sc.enrolled_at DESC");
   // }
   // add update and delete method here ok
   
-}
 
+
+ public static function delete($student_id) {
+    global $conn;
+    $stmt = $conn->prepare("DELETE FROM students_courses WHERE id = ?");
+    $stmt->bind_param("i", $student_id);
+    return $stmt->execute();
+}
+}
 
 ?>

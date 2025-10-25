@@ -41,10 +41,10 @@ export const addAttendance = async (studentId,courseId,date,status)=>{
   }
 };
 
-export const updateAttendance = async (Id,status)=>{
+export const updateAttendance = async (id,status)=>{
    try {
-    const res = await axios.put(`${BASE_URL}/api/attendance/update`, {
-      id: Id,
+    const res = await axios.patch(`${BASE_URL}/api/attendance/update?id=${id}`, {
+      id: id,
       status: status,
     });
     return res.data;

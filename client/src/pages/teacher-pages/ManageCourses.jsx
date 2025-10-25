@@ -1,5 +1,6 @@
 import { useAuthStore } from "../../context/useAuthStore";
 import { useAllStudentCourses } from "../../hooks/useStudentCourses"
+import { deleteCourse } from "../../services/courseService";
 
 const ManageCourses = () => {
   const {user} = useAuthStore();
@@ -8,6 +9,8 @@ const ManageCourses = () => {
   console.log("auth data:", user);
   console.log("all student courses data:", studCourses);
   console.log("Is array?", Array.isArray(studCourses));
+
+    
 
   if (isPending) return <p>Loading all student courses...</p>;
   
@@ -26,6 +29,13 @@ const ManageCourses = () => {
     return <p>Invalid data format received</p>;
   }
 
+  const handleDelete = (student_id) => {
+    console.log("Deleting course with id:", student_id);
+    if (confirm("Are you sure you want to delete this course enrollment?")) {
+      deleteCourse(student_id);
+      
+    };
+  }
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold mb-4">Students Enrolled in Your Courses</h2>
@@ -41,7 +51,7 @@ const ManageCourses = () => {
    <button 
       className="border-2 border-green-500 px-4 py-2 rounded 
       text-green-500 font-semibold hover:bg-green-500 hover:text-white mr-5 mb-2"
-      >Add Grade</button></div>
+      >Add Course</button></div>
           <table className="min-w-full shadow rounded bg-white">
             <thead className="bg-blue-100 text-left">
               <tr>
@@ -61,11 +71,12 @@ const ManageCourses = () => {
                   <td className="p-3">{c.email || 'N/A'}</td>
                   <td className="p-3">{c.course_name || 'N/A'}</td>
                   <td className='flex p-2 justify-evenly mr-2 mt-2 mb-2 font-semibold '>
-                <button onClick={() => navigate(`/attendanceForm/${record.id}`)}
+                <button onClick={() => navigate(`/attendanceForm/${c.course_id}`)}
                   className='border-2 rounded border-blue-500 px-2 py-1 
                    text-blue-500 hover:bg-blue-500 hover:text-white'
                   >Update</button>
-              <button onClick={()=>handleDelete(record.id)}
+              <button onClick={()=>handleDelete(c.student_id)}
+
                 className='border-2 rounded border-red-500 px-2 py-1 
                    text-red-500 hover:bg-red-500 hover:text-white'
                    >delete</button>
