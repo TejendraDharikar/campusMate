@@ -17,19 +17,25 @@ export const fetchAllStudentGrades = async (teacher_id) => {
   return res.data;
 };
 
-// export const addGrade = async (payload) => {
-//   return axios.post(API_URL, {
-//     action: 'store',
-//     ...payload,
-//   });
-// };
+export const addGrade = async ({student_id,course_id,grade,remarks})=>{
+  console.log("sending to backend:",student_id,course_id,grade,remarks);
+  
+  try{
+    const res =await axios.post(`${BASE_URL}/api/grade/add`,{
+      student_id,
+      course_id,
+      grade,  
+      remarks,
+    });
+    console.log("backend response:",res.data);
+    
+    return res.data;
+  } catch (err) {
+    throw new Error("Backend:",err.response?.data?.message || 'Failed to add grade');
+  }
+};
 
-// export const updateGrade = async (payload) => {
-//   return axios.post(API_URL, {
-//     action: 'update',
-//     ...payload,
-//   });
-// };
+
 
 export const deleteGrade = async (grade_id) => {
   try {

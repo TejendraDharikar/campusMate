@@ -1,8 +1,27 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteGrade } from "../services/gradeService";
+import { addGrade, deleteGrade } from "../services/gradeService";
+import { data } from "react-router-dom";
 
 export const useGradeMutations = (teacher_id)=>{
   const queryClient = useQueryClient();
+
+
+  const add=useMutation({
+    mutationFn:(data)=>{
+      console.log("MutationFn received:",data);
+      return addGrade(data);
+    },
+      
+    onSuccess:()=>{
+      queryClient.invalidateQueries({ queryKey: ["allStudentGrades", teacher_id] });
+      alert("Grade added successfully on mutation");
+    },
+    onError: (error) => {
+      console.error("Error adding grade:", error);
+      alert("Failed to add grade");
+    }, 
+  })
+
 
   const remove = useMutation({
     mutationFn: (grade_id) => deleteGrade(grade_id),
@@ -13,6 +32,7 @@ export const useGradeMutations = (teacher_id)=>{
   });
    
   return {
+    addGrade: add.mutate,
     deleteGrade: remove.mutate,
   };
 }

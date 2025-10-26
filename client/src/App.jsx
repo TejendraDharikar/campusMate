@@ -13,6 +13,7 @@ import ManageCourses from "./pages/teacher-pages/ManageCourses";
 import ManageGrades from "./pages/teacher-pages/ManageGrades";
 import MyGrades from "./pages/student-pages/MyGrades";
 import AttendanceForm from "./components/AttendanceForm";
+import GradeForm from "./components/GradeForm";
 
 
 const router = createBrowserRouter([
@@ -81,6 +82,22 @@ path:"/teacher-grade",
 element:(
  <DashboardLayout>
         < ManageGrades/>
+        </DashboardLayout>
+),
+  },
+    {
+path:"/gradeForm",
+element:(
+ <DashboardLayout>
+        < GradeForm/>
+        </DashboardLayout>
+),
+  },
+  {
+path:"/gradeForm/:id",
+element:(
+ <DashboardLayout>
+        <GradeForm />
         </DashboardLayout>
 ),
   },

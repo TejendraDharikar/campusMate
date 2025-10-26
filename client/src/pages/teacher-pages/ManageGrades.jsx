@@ -1,9 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../context/useAuthStore"
 import { useAllStudentGrades } from "../../hooks/useGrades";
 import { deleteGrade } from "../../services/gradeService";
 
 
 const ManageGrades = () => {
+  const navigate=useNavigate();
   const {user}=useAuthStore();
   const {data:grades,isPending,isError}=useAllStudentGrades(user?.id);
 
@@ -17,13 +19,9 @@ console.log("all student grades data:",grades);
 
  const handleDelete=(grade_id)=>{
     if(confirm("confirm delete dardim grade record?")){
-      deleteGrade(grade_id,{
-        onSuccess:()=>{
-          refetch();
-        }
-    });
+      deleteGrade(grade_id);
   }
-}
+};
 
   return (
     <div className="space-y-6 bg-gradient-to-br from-green-50 to-white rounded-lg shadow-md">
@@ -33,6 +31,7 @@ console.log("all student grades data:",grades);
       <div className="text-right mb-2 mr-5">
        
       <button 
+      onClick={()=>navigate("/gradeForm")}
       className="border-2 border-green-500 px-4 py-2 rounded 
       text-green-500 font-semibold hover:bg-green-500 hover:text-white "
       >Add Grade</button>
@@ -57,7 +56,7 @@ console.log("all student grades data:",grades);
             <td className="p-3">{val.score}</td>
             <td className="p-3">{val.remarks}</td>
              <td className='flex p-3 justify-evenly mr-2 mt-2 mb-2 font-semibold '>
-                <button onClick={() => navigate(`/attendanceForm/${val.id}`)}
+                <button onClick={() => navigate(`/gradeForm/${val.grade_id}`)}
                   className='border-2 rounded border-blue-500 px-2 py-1 
                    text-blue-500 hover:bg-blue-500 hover:text-white'
                   >Update</button>

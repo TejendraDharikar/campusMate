@@ -43,9 +43,9 @@ class GradeModel{
   }
 
   // ➕ Add grade
-   public static function add($student_id, $course_id, $grade) {
+   public static function add($student_id, $course_id, $grade,$remarks) {
     global $conn;
-    $stmt = $conn->prepare("INSERT INTO grades (student_id, course_id, grade,remarks) VALUES ( ?, ?,?, ?)");
+    $stmt = $conn->prepare("INSERT INTO grades (student_id, course_id, score,remarks) VALUES ( ?, ?,?, ?)");
     $stmt->bind_param("iiss", $student_id, $course_id, $grade,$remarks);
     return $stmt->execute();
   }
@@ -53,7 +53,7 @@ class GradeModel{
     // ✏️ Update grade
   public static function update($grade_id, $grade, $remarks) {
     global $conn;
-    $stmt = $conn->prepare("UPDATE grades SET grade = ?, remarks = ? WHERE id = ?");
+    $stmt = $conn->prepare("UPDATE grades SET score = ?, remarks = ? WHERE id = ?");
     $stmt->bind_param("ssi", $grade, $remarks, $grade_id);
     return $stmt->execute();
   }

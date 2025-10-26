@@ -59,7 +59,7 @@ class GradeController {
     }
 
     $success = GradeModel::add($student_id, $course_id, $grade,$remarks);
-    echo json_encode(["success" => $success]);
+    echo json_encode($success);
   }
 
   
