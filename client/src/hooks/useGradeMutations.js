@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addGrade, deleteGrade } from "../services/gradeService";
-import { data } from "react-router-dom";
 
 export const useGradeMutations = (teacher_id)=>{
   const queryClient = useQueryClient();

@@ -14,6 +14,7 @@ import ManageGrades from "./pages/teacher-pages/ManageGrades";
 import MyGrades from "./pages/student-pages/MyGrades";
 import AttendanceForm from "./components/AttendanceForm";
 import GradeForm from "./components/GradeForm";
+import CourseForm from "./components/CourseForm";
 
 
 const router = createBrowserRouter([
@@ -74,6 +75,22 @@ path:"/manage-courses",
 element:(
  <DashboardLayout>
         <ManageCourses />
+        </DashboardLayout>
+),
+  },
+  {
+path:"/courseForm",
+element:(
+ <DashboardLayout>
+        <CourseForm />
+        </DashboardLayout>
+),
+  },
+   {
+path:"/courseForm/:id",
+element:(
+ <DashboardLayout>
+        <CourseForm />
         </DashboardLayout>
 ),
   },

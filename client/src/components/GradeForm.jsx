@@ -25,8 +25,11 @@ const GradeForm = ({ initialData }) => {
   const onSubmit = async (data) => {
     console.log("Form submitted with:",data);
     try {
-     addGrade(data);
-      console.log("Grade mutation called");
+      if(initialData){
+        // Update logic can be added here
+        console.log("Update grade mutation called",{...data, grade_id});
+      }else{addGrade(data);
+      console.log("Grade add mutation called");}
       navigate("/teacher-grade");
     } catch (error) {
       console.error("Error submitting grade:", error);

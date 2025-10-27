@@ -51,16 +51,26 @@ public static function allStudentCourses() {
 
 
     $result = CourseModel::getById($student_id);
-    error_log("📤 Returning courses: " . json_encode($result)); // ✅ Add this
+    error_log("📤 Returning courses: " . json_encode($result)); 
 
     echo json_encode($result);
 }
 
-  // public static function store(){
-  //   $data =json_decode(file_get_contents("php://input"),true);
-  //   $success=CourseModel::create($data);
-  //   echo json_encode(["success=>$success"]);
-  // }
+ 
+
+public static function addCourse(){
+  $input = json_decode(file_get_contents("php://input"),true);
+  $student_id = $input['student_id'] ?? null;
+  $course_id = $input['course_id'] ?? null;
+
+  if (!$student_id || !$course_id){
+    echo json_encode(["error"=>"Missing student_id or course_id"]);
+    return;
+  }
+
+  $success = CourseModel::add($student_id,$course_id);
+  echo json_encode($success);
+}
 
 
   public static function deleteCourse() {

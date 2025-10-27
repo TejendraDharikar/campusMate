@@ -24,14 +24,16 @@ export const getCourses = async (studentId) => {
   }
 };
 
-// export const addCourse = async (courseData) => {
-//   try {
-//     const res = await axios.post(`${BASE_URL}api/courses`, courseData);
-//     return res.data;
-//   } catch (err) {
-//     throw new Error(err.response?.data?.message || 'Course creation failed');
-//   }
-// };
+export const addCourse = async (data) => {
+  console.log("Adding course:", data);
+  try {
+    const res = await axios.post(`${BASE_URL}/api/courses/add`,data);
+    console.log("added successfully",res.data);
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response?.data?.message || 'Course creation failed');
+  }
+};
 
 // export const updateCourse = async (id, courseData) => {
 //   try {

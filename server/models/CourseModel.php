@@ -49,13 +49,13 @@ ORDER BY sc.enrolled_at DESC");
 
   }
 
-  // public static function create($data){
-  //   global $conn;
-  //   $stmt=$conn->prepare("INSERT INTO courses(title,description,credits,teacher_id) VALUES (?,?,?,?)");
-  //   $stmt->bind_param("ssii",$data['title'], $data['description'], $data['credits'], $data['teacher_id']);
-  //   return $stmt->execute();
-  // }
-  // add update and delete method here ok
+  public static function add($student_id, $course_id){
+    global $conn;
+    $stmt=$conn->prepare("INSERT INTO students_courses(student_id,course_id) VALUES (?,?)");
+    $stmt->bind_param("ii",$student_id,$course_id);
+    return $stmt->execute();
+  }
+
   
 
 

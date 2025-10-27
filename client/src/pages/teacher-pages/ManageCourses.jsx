@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../context/useAuthStore";
 import { useAllStudentCourses } from "../../hooks/useStudentCourses"
 import { deleteCourse } from "../../services/courseService";
 
 const ManageCourses = () => {
+  const navigate = useNavigate();
   const {user} = useAuthStore();
   const {data: studCourses, isPending, isError, error} = useAllStudentCourses(user?.id);
 
@@ -49,6 +51,7 @@ const ManageCourses = () => {
 <div className='flex justify-between'>
   <p className="ml-4 mt-3">Total: {studCourses.length} enrollment(s)</p>
    <button 
+   onClick={()=>navigate("/courseForm")}
       className="border-2 border-green-500 px-4 py-2 rounded 
       text-green-500 font-semibold hover:bg-green-500 hover:text-white mr-5 mb-2"
       >Add Course</button></div>
@@ -71,7 +74,7 @@ const ManageCourses = () => {
                   <td className="p-3">{c.email || 'N/A'}</td>
                   <td className="p-3">{c.course_name || 'N/A'}</td>
                   <td className='flex p-2 justify-evenly mr-2 mt-2 mb-2 font-semibold '>
-                <button onClick={() => navigate(`/attendanceForm/${c.course_id}`)}
+                <button onClick={() => navigate(`/courseForm/${c.course_id}`)}
                   className='border-2 rounded border-blue-500 px-2 py-1 
                    text-blue-500 hover:bg-blue-500 hover:text-white'
                   >Update</button>

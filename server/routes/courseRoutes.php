@@ -8,6 +8,8 @@ if ($uri === '/api/courses/all' && $method === 'POST') {
   CourseController::allStudentCourses();
 } elseif ($uri === '/api/courses/student' && $method === 'POST') {
   CourseController::studentCourses();
+}elseif ($uri === '/api/courses/add' && $method === 'POST') {
+  CourseController::addCourse();
 }elseif($uri === '/api/courses/delete' && $method === 'DELETE'){
   CourseController::deleteCourse();
 }
