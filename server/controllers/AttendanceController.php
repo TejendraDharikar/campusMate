@@ -10,6 +10,20 @@ class AttendanceController {
     echo json_encode($records);
   }
 
+
+
+  public static function getAttendanceById() {
+    $input = json_decode(file_get_contents("php://input"), true);
+    $id = $input['attendanceId'] ?? null;
+    if (!$id) {
+      echo json_encode(["error" => "Missing attendanceId"]);
+      exit;
+    }
+  $record = AttendanceModel::getAttendanceById($id);
+  echo json_encode($record);
+}
+
+
   // 🔍 Get attendance for a specific student (via user_id)
   public static function getStudentAttendance() {
     $input = json_decode(file_get_contents("php://input"), true);
@@ -30,6 +44,9 @@ class AttendanceController {
     $records = AttendanceModel::getByStudent($student_id);
     echo json_encode($records);
   }
+
+
+
 
   // ➕ Add attendance
   public static function addStudentAttendance() {
@@ -56,13 +73,15 @@ class AttendanceController {
     $data = json_decode(file_get_contents("php://input"), true);
     $id = $data['id'] ?? null;
     $status = $data['status'] ?? null;
+    $date = $data['date'] ?? null;
 
-    if (!$id || !$status) {
-      echo json_encode(["error" => "Missing id or status"]);
+
+    if (!$id || !$status || !$date) {
+      echo json_encode(["error" => "Missing id or date or status"]);
       exit;
     }
-
-    $result = AttendanceModel::updateById($id, $status);
+     error_log("Received PATCH payload: " . json_encode($data));
+    $result = AttendanceModel::updateById($id,$date ,$status);
     echo json_encode($result);
   }
 

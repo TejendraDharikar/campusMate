@@ -22,10 +22,14 @@ export const useAttendanceMutations = (studentId)=>{
   });
 
   const update = useMutation({
-    mutationFn: ({ id, status }) => updateAttendance(id, status),
+    mutationFn: ({ id,date, status }) => updateAttendance(id,date, status),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["allAttendance"] });
+      alert("Attendance updated successfully");
     },
+    onError: () => {
+    alert("Failed to update attendance");
+  },
   });
 
   const remove = useMutation({

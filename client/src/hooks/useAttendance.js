@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchAllAttendance, fetchAttendance } from "../services/attendanceService";
+import { fetchAllAttendance, fetchAttendance, fetchAttendanceById } from "../services/attendanceService";
 
 export const useAllAttendance = ()=>{
   return useQuery({
@@ -17,6 +17,14 @@ export const useAllAttendance = ()=>{
   );
 }
 
+
+export const useAttendanceById = (attendanceId) => {
+  return useQuery({
+    queryKey: ["attendanceById", attendanceId],
+    queryFn: () => fetchAttendanceById(attendanceId),
+    enabled: !!attendanceId,
+  });
+};
 
 export const useAttendance = (studentId) => {
   return useQuery({

@@ -9,6 +9,8 @@ if ($uri === '/api/attendance/all' && $method === 'GET') {
 }
 elseif ($uri === '/api/attendance/student' && $method === 'POST') {
   AttendanceController::getStudentAttendance();
+}elseif ($uri === '/api/attendance/studentById' && $method === 'POST') {
+  AttendanceController::getAttendanceById();
 }elseif($uri === '/api/attendance/add' && $method === 'POST'){
   AttendanceController::addStudentAttendance();
 }elseif($uri === '/api/attendance/update' && $method === 'PATCH'){

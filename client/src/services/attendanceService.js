@@ -11,6 +11,17 @@ export const fetchAllAttendance = async ()=>{
   }
 };
 
+export const fetchAttendanceById = async (attendanceId) => {
+  try {
+    const res = await axios.post(`${BASE_URL}/api/attendance/studentById`,{
+      attendanceId
+    });
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response?.data?.message || 'Failed to fetch attendance');
+  }
+};
+
 
 
 export const fetchAttendance = async (userid) => {
@@ -41,12 +52,16 @@ export const addAttendance = async (studentId,courseId,date,status)=>{
   }
 };
 
-export const updateAttendance = async (id,status)=>{
+export const updateAttendance = async (id,date,status)=>{
+  console.log("sending in backend:",id,date,status);
+  
    try {
     const res = await axios.patch(`${BASE_URL}/api/attendance/update?id=${id}`, {
       id: id,
+      date: date,
       status: status,
     });
+    console.log("response from backend:",res.data);
     return res.data;
   } catch (err) {
     throw new Error(err.response?.data?.message || 'Failed to update attendance');

@@ -14,6 +14,7 @@ public static function fetchAllStudent() {
   ";
 
   $stmt = $conn->prepare($query);
+  
   $stmt->execute();
   $result = $stmt->get_result();
 
@@ -31,6 +32,18 @@ public static function fetchAllStudent() {
   $stmt->close();
   return $records;
 }
+
+
+public static function getAttendanceById($id) {
+  global $conn;
+  $stmt = $conn->prepare("SELECT * FROM attendance WHERE id = ?");
+  $stmt->bind_param("i", $id);
+  $stmt->execute();
+  $result = $stmt->get_result()->fetch_assoc();
+  $stmt->close();
+ return $result ?: ["error" => "Attendance not found"];
+}
+
 
   public static function getByStudent($student_id) {
     global $conn;
@@ -85,10 +98,10 @@ public static function fetchAllStudent() {
 
 
 
-  public static function updateById($id,$status){
+  public static function updateById($id,$date,$status){
  global $conn;
-  $stmt = $conn->prepare("UPDATE attendance SET status = ? WHERE id = ?");
-  $stmt->bind_param("si", $status, $id);
+  $stmt = $conn->prepare("UPDATE attendance SET status = ?,date=? WHERE id = ?");
+  $stmt->bind_param("ssi", $status,$date, $id);
   $success = $stmt->execute();
   $stmt->close();
   return $success ? ["success" => true] : ["error" => "Update failed"];

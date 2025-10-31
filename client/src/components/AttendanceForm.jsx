@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAttendanceMutations } from '../hooks/useAttendanceMutations';
-import { useAttendance } from '../hooks/useAttendance';
+import { useAttendance, useAttendanceById } from '../hooks/useAttendance';
 
 
 const AttendanceForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const isEdit = (id);
+  const isEdit = Boolean(id);
 console.log("Editing attendance ID:", id);
   const {
     register,
@@ -19,14 +19,16 @@ console.log("Editing attendance ID:", id);
 
   const { addAttendance, updateAttendance } = useAttendanceMutations();
 
-  const { data: existing, isLoading } = useAttendance(id);
+// Add a new hook for fetching by attendance ID 
+const { data: existing, isLoading } = useAttendanceById(id); 
+
 console.log(" Existing attendance data:", existing);
 
   useEffect(() => {
     if (isEdit && existing) {
       reset({
-        studentId: existing.studentId,
-        courseId: existing.courseId,
+        studentId: existing.student_id,
+        courseId: existing.course_id,
         date: existing.date,
         status: existing.status,
       });
@@ -34,16 +36,13 @@ console.log(" Existing attendance data:", existing);
   }, [existing, isEdit, reset]);
 
   const onSubmit = (data) => {
+    console.log("submit data:",data);
+    
     if (isEdit) {
       updateAttendance({ id, ...data });
     } else {
-      addAttendance({
-  studentId: data.studentId,
-  courseId: data.courseId,
-  date: data.date,
-  status: data.status,
-});
-console.log("data is",data.studentId, data.courseId, data.date, data.status);
+      addAttendance(data);
+console.log("data is",data);
 
     }
     navigate('/teacher-attendance');
