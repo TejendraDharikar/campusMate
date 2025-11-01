@@ -44,6 +44,21 @@ class GradeController {
     echo json_encode($grades);
   }
 
+
+
+  public static function getById(){
+    $input = json_decode(file_get_contents("php://input"),true);
+    $grade_id=$input['grade_id']??null;
+    if(!$grade_id){   
+      echo json_encode(["error"=>"Missing grade_id"]);
+      exit;
+    } 
+    $record=GradeModel::getById($grade_id);
+    echo json_encode($record);
+  }
+
+
+
   // 📥 Add a grade
   public static function addGrade() {
     $data = json_decode(file_get_contents("php://input"), true);
@@ -64,21 +79,24 @@ class GradeController {
 
   
 
-  // // ✏️ Update grade
-  // public static function update() {
-  //   $data = json_decode(file_get_contents("php://input"), true);
-  //   $grade_id = $data['grade_id'] ?? null;
-  //   $grade = $data['grade'] ?? null;
-  
+  // ✏️ Update grade
+  public static function update() {
+    $data = json_decode(file_get_contents("php://input"), true);
+    $grade_id = $data['grade_id'] ?? null;
+    $grade = $data['grade'] ?? null;
+     $remarks = $data['remarks'] ?? null;
 
-  //   if (!$grade_id || !$grade) {
-  //     echo json_encode(["error" => "Missing grade_id or grade"]);
-  //     return;
-  //   }
+    if (!$grade_id || !$grade || !$remarks) {
+      echo json_encode(["error" => "Missing grade_id or grade or remarks"]);
+      exit;
+    }
 
-  //   $success = GradeModel::update($grade_id, $grade);
-  //   echo json_encode(["success" => $success]);
-  // }
+     error_log("Received PATCH payload: " . json_encode($data));
+
+    $success = GradeModel::update($grade_id, $grade,$remarks);
+    echo json_encode( $success);
+  }
+
 
   // ❌ Delete grade
   public static function delete() {

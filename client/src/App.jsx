@@ -111,7 +111,7 @@ element:(
 ),
   },
   {
-path:"/gradeForm/:id",
+path:"/gradeForm/:grade_id",
 element:(
  <DashboardLayout>
         <GradeForm />

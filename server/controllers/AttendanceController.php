@@ -81,6 +81,7 @@ class AttendanceController {
       exit;
     }
      error_log("Received PATCH payload: " . json_encode($data));
+     
     $result = AttendanceModel::updateById($id,$date ,$status);
     echo json_encode($result);
   }

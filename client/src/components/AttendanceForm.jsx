@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAttendanceMutations } from '../hooks/useAttendanceMutations';
-import { useAttendance, useAttendanceById } from '../hooks/useAttendance';
+import { useAttendanceById } from '../hooks/useAttendance';
 
 
 const AttendanceForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEdit = Boolean(id);
-console.log("Editing attendance ID:", id);
+   const { addAttendance, updateAttendance } = useAttendanceMutations();
+   const { data: existing, isPending } = useAttendanceById(id);
   const {
     register,
     handleSubmit,
@@ -17,12 +18,10 @@ console.log("Editing attendance ID:", id);
     formState: { errors },
   } = useForm();
 
-  const { addAttendance, updateAttendance } = useAttendanceMutations();
 
-// Add a new hook for fetching by attendance ID 
-const { data: existing, isLoading } = useAttendanceById(id); 
-
+console.log("Editing attendance ID:", id);
 console.log(" Existing attendance data:", existing);
+
 
   useEffect(() => {
     if (isEdit && existing) {
@@ -34,6 +33,8 @@ console.log(" Existing attendance data:", existing);
       });
     }
   }, [existing, isEdit, reset]);
+
+
 
   const onSubmit = (data) => {
     console.log("submit data:",data);
@@ -48,7 +49,7 @@ console.log("data is",data);
     navigate('/teacher-attendance');
   };
 
-  if (isEdit && isLoading) return <p>Loading attendance...</p>;
+  if (isEdit && isPending) return <p>Loading attendance...</p>;
 
   return (
     <div className="max-w-xl mx-auto mt-6 p-4 border rounded shadow">
@@ -60,7 +61,10 @@ console.log("data is",data);
           type="number"
           placeholder="Student ID"
           {...register('studentId', { required: true })}
-          className="w-full border p-2 rounded"
+          
+            className={isEdit?"w-full pointer-events-none border p-2 rounded":"w-full border p-2 rounded"}
+          
+          
         />
         {errors.studentId && <p className="text-red-500">Student ID is required</p>}
 
@@ -68,7 +72,7 @@ console.log("data is",data);
           type="number"
           placeholder="Course ID"
           {...register('courseId', { required: true })}
-          className="w-full border p-2 rounded"
+          className={isEdit?"w-full pointer-events-none border p-2 rounded":"w-full border p-2 rounded"}
         />
         {errors.courseId && <p className="text-red-500">Course ID is required</p>}
 

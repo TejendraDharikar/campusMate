@@ -42,6 +42,20 @@ class GradeModel{
     return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
   }
 
+
+
+  public static function getById($grade_id) {
+    global $conn;
+    $stmt = $conn->prepare("SELECT * FROM grades WHERE id = ?");
+    $stmt->bind_param("i", $grade_id);
+    $stmt->execute();
+    $result=$stmt->get_result()->fetch_assoc();
+    $stmt->close();
+    return $result?:["error"=>"Grade not found in database"];
+  }
+
+
+
   // ➕ Add grade
    public static function add($student_id, $course_id, $grade,$remarks) {
     global $conn;
@@ -55,7 +69,9 @@ class GradeModel{
     global $conn;
     $stmt = $conn->prepare("UPDATE grades SET score = ?, remarks = ? WHERE id = ?");
     $stmt->bind_param("ssi", $grade, $remarks, $grade_id);
-    return $stmt->execute();
+     $success=$stmt->execute();
+    $stmt->close();
+    return $success ? ["success" => true] : ["error" => "Update failed"];
   }
 
   // ❌ Delete grade

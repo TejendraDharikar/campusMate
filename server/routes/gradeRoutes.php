@@ -8,8 +8,12 @@ if ($uri === '/api/grade/all' && $method === 'POST') {
   GradeController::teacherGrades();
 } elseif ($uri === '/api/grade/student' && $method === 'POST') {
   GradeController::studentGrades();
+}elseif ($uri === '/api/grade/byid' && $method === 'POST') {
+  GradeController::getById();
 }elseif ($uri === '/api/grade/add' && $method === 'POST') {
   GradeController::addGrade();
+}elseif ($uri === '/api/grade/update' && $method === 'PATCH') {
+  GradeController::update();
 }
 elseif ($uri === '/api/grade/delete' && $method === 'DELETE') {
   GradeController::delete();
