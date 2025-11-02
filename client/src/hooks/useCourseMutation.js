@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addCourse, deleteCourse } from "../services/courseService";
+import { addCourse, deleteCourse, updateCourse } from "../services/courseService";
 
 export const useCourseMutation = () => {
   const queryClient = useQueryClient(); 
@@ -22,6 +22,25 @@ export const useCourseMutation = () => {
     },
   })
 
+
+  const update= useMutation({
+    mutationFn:(data)=>{
+      console.log("mutation data:",data);
+      return updateCourse(data)
+    },
+    onSuccess:()=>{
+      queryClient.invalidateQueries({
+        queryKey:["allStudentCourses"]
+      });
+      alert("Course updated successfully");
+    },
+    onError:(error)=>{
+      console.error("error updating course in mutation",error);
+      alert("failed to update course")
+    }
+  })
+
+
   const deleteCourseMutation = useMutation({
     mutationFn: (student_id) => deleteCourse(student_id),
     onSuccess: () => {    
@@ -32,6 +51,7 @@ export const useCourseMutation = () => {
 
   return {
     addCourse: addCourseMutation.mutate,
+    updateCourse:update.mutate,
     deleteCourse: deleteCourseMutation.mutate,
   };
 };

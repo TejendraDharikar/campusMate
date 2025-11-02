@@ -1,4 +1,4 @@
-import { getAllCourses, getCourses } from "../services/courseService"
+import { getAllCourses, getById, getCourses } from "../services/courseService"
 import {useQuery} from "@tanstack/react-query"
 
 export const useStudentCourses =(studentId)=>{
@@ -12,6 +12,20 @@ export const useStudentCourses =(studentId)=>{
     }
   })
 }
+
+
+export const useStudentById = (id) => {
+  return useQuery({
+    queryKey:["courseById",id],
+    queryFn:()=>getById(id),
+    enabled:!!id,
+    onError :(err)=>{
+      console.error("failed to fetch course by id",err);
+      
+    }
+  })
+}
+
 
 export const useAllStudentCourses=(teacher_id)=>{
   return useQuery({

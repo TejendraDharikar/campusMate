@@ -50,12 +50,25 @@ public static function allStudentCourses() {
     };
 
 
-    $result = CourseModel::getById($student_id);
+    $result = CourseModel::getByStudentId($student_id);
     error_log("📤 Returning courses: " . json_encode($result)); 
 
     echo json_encode($result);
 }
 
+
+public static function getById(){
+  $input = json_decode(file_get_contents("php://input"),true);
+  $id= $input['id'] ?? null;
+
+  if (!$id){
+    echo json_encode(["error"=>"missing id "]);
+    exit;
+  }
+
+  $success = CourseModel::getById($id);
+  echo json_encode($success);
+}
  
 
 public static function addCourse(){
@@ -72,6 +85,22 @@ public static function addCourse(){
   echo json_encode($success);
 }
 
+
+
+public static function updateCourse(){
+  $input = json_decode(file_get_contents("php://input"),true);
+  $id=$input['id'] ?? null;
+  $student_id = $input['student_id'] ?? null;
+  $course_id = $input['course_id'] ?? null;
+
+  if (!$id || !$student_id || !$course_id){
+    echo json_encode(["error"=>"Missing id or student_id or course_id"]);
+    return;
+  }
+
+  $success = CourseModel::getById($id,$student_id,$course_id);
+  echo json_encode($success);
+}
 
   public static function deleteCourse() {
    parse_str($_SERVER['QUERY_STRING'], $params);

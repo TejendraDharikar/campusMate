@@ -2,51 +2,63 @@
 import { useCourseMutation } from '../hooks/useCourseMutation'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useStudentById } from '../hooks/useStudentCourses';
+import { useEffect } from 'react';
 
-const CourseForm = ({initialData}) => {
+const CourseForm = () => {
 
-  const {}=useParams();//for editing course in future
+  const {id }=useParams();
+  const isEdit=Boolean(id);
   const{addCourse,updateCourse}=useCourseMutation();
   const navigate=useNavigate();
-
+  const {data:existing,isPending}=useStudentById(id);
   const {
     register,
     handleSubmit,
-    formState: {errors, isSubmitting},
-  }=useForm({
-    defaultValues:{
-      student_id:initialData?.student_id || "",
-      course_id:initialData?.course_id || "",
-    },
-  });
+    reset,
+    formState: {errors},
+  }=useForm();
+
+
+
+console.log("id is :",id);
+console.log("existing data in form",existing);
+
+
+useEffect(()=>{
+  if (isEdit && existing){
+    reset({
+      student_id:existing.student_id,
+      course_id:existing.course_id
+    });
+  }
+},[existing,isEdit,reset]);
+
 
   const onSubmit=async(data)=>{
     console.log("Form submitted with:",data);
-    try{
-      if(initialData){
-        // updateCourse(data); for future use
-        console.log("update Course mutation called",data);
-      }else
-      {addCourse(data);
-      console.log("add Course mutation called",data);}
-      navigate("/manage-courses");
-    }
-    catch(error){
-      console.error("Error submitting course:",error);
-    }
+   if (isEdit){
+    updateCourse({id, ...data});
+   }else{
+    addCourse(data);
+   }
+   navigate('/manage-courses');
   };
 
 
+  if (isEdit && isPending) return <p>loading course data... </p>
+
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-center">{initialData?"Update Course Enrollment":" Add Course Enrollment"}</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center">{isEdit?"Update Course Enrollment":" Add Course Enrollment"}</h2>
       <form onSubmit={handleSubmit(onSubmit)}
-      className="space-y-4 flex flex-col">
+      className="space-y-4">
         <div>
           <label>StudentId</label>
         <input type="number"
          placeholder="student id"
          {...register("student_id",{required:true})}
+         className="w-full border p-2 rounded"
           />
           {errors.student_id && <span className="text-red-500">Student ID is required</span>}
         </div>
@@ -56,11 +68,13 @@ const CourseForm = ({initialData}) => {
         <input type="number"
          placeholder="course id"
          {...register("course_id",{required:true})}
+         className="w-full border p-2 rounded"
           />
           {errors.course_id && <span className="text-red-500">Course ID is required</span>}
         </div>
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Submitting..." : initialData ? "Update Course" : "Add Course"}
+        <button type="submit" 
+        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+          { isEdit ? "Update Course" : "Add Course"}
         </button>
       </form>
     </div>
