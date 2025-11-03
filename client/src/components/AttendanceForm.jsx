@@ -1,16 +1,15 @@
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useAttendanceMutations } from '../hooks/useAttendanceMutations';
-import { useAttendanceById } from '../hooks/useAttendance';
-
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useParams, useNavigate } from "react-router-dom";
+import { useAttendanceMutations } from "../hooks/useAttendanceMutations";
+import { useAttendanceById } from "../hooks/useAttendance";
 
 const AttendanceForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEdit = Boolean(id);
-   const { addAttendance, updateAttendance } = useAttendanceMutations();
-   const { data: existing, isPending } = useAttendanceById(id);
+  const { addAttendance, updateAttendance } = useAttendanceMutations();
+  const { data: existing, isPending } = useAttendanceById(id);
   const {
     register,
     handleSubmit,
@@ -18,10 +17,8 @@ const AttendanceForm = () => {
     formState: { errors },
   } = useForm();
 
-
-console.log("Editing attendance ID:", id);
-console.log(" Existing attendance data:", existing);
-
+  console.log("Editing attendance ID:", id);
+  console.log(" Existing attendance data:", existing);
 
   useEffect(() => {
     if (isEdit && existing) {
@@ -34,19 +31,16 @@ console.log(" Existing attendance data:", existing);
     }
   }, [existing, isEdit, reset]);
 
-
-
   const onSubmit = (data) => {
-    console.log("submit data:",data);
-    
+    console.log("submit data:", data);
+
     if (isEdit) {
       updateAttendance({ id, ...data });
     } else {
       addAttendance(data);
-console.log("data is",data);
-
+      console.log("data is", data);
     }
-    navigate('/teacher-attendance');
+    navigate("/teacher-attendance");
   };
 
   if (isEdit && isPending) return <p>Loading attendance...</p>;
@@ -54,38 +48,47 @@ console.log("data is",data);
   return (
     <div className="max-w-xl mx-auto mt-6 p-4 border rounded shadow">
       <h2 className="text-xl font-bold text-center mb-4">
-        {isEdit ? 'Update Attendance' : 'Add Attendance'}
+        {isEdit ? "Update Attendance" : "Add Attendance"}
       </h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <input
           type="number"
           placeholder="Student ID"
-          {...register('studentId', { required: true })}
-          
-            className={isEdit?"w-full pointer-events-none border p-2 rounded":"w-full border p-2 rounded"}
-          
-          
+          {...register("studentId", { required: true })}
+          className={
+            isEdit
+              ? "w-full pointer-events-none border p-2 rounded"
+              : "w-full border p-2 rounded"
+          }
         />
-        {errors.studentId && <p className="text-red-500">Student ID is required</p>}
+        {errors.studentId && (
+          <p className="text-red-500">Student ID is required</p>
+        )}
 
         <input
           type="number"
           placeholder="Course ID"
-          {...register('courseId', { required: true })}
-          className={isEdit?"w-full pointer-events-none border p-2 rounded":"w-full border p-2 rounded"}
+          {...register("courseId", { required: true })}
+          className={
+            isEdit
+              ? "w-full pointer-events-none border p-2 rounded"
+              : "w-full border p-2 rounded"
+          }
         />
-        {errors.courseId && <p className="text-red-500">Course ID is required</p>}
+        {errors.courseId && (
+          <p className="text-red-500">Course ID is required</p>
+        )}
 
         <input
           type="date"
-          {...register('date', { required: true })}
+          {...register("date", { required: true })}
           className="w-full border p-2 rounded"
         />
         {errors.date && <p className="text-red-500">Date is required</p>}
 
         <select
-        type="enum"
-          {...register('status', { required: true })}
+          type="enum"
+          {...register("status", { required: true })}
           className="w-full border p-2 rounded"
         >
           <option value="present">present</option>
@@ -98,7 +101,7 @@ console.log("data is",data);
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
         >
-          {isEdit ? 'Update' : 'Add'} Attendance
+          {isEdit ? "Update" : "Add"} Attendance
         </button>
       </form>
     </div>

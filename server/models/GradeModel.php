@@ -56,7 +56,7 @@ class GradeModel{
 
 
 
-  // ➕ Add grade
+  // Add grade
    public static function add($student_id, $course_id, $grade,$remarks) {
     global $conn;
     $stmt = $conn->prepare("INSERT INTO grades (student_id, course_id, score,remarks) VALUES ( ?, ?,?, ?)");
@@ -64,7 +64,7 @@ class GradeModel{
     return $stmt->execute();
   }
 
-    // ✏️ Update grade
+    // Update grade
   public static function update($grade_id, $grade, $remarks) {
     global $conn;
     $stmt = $conn->prepare("UPDATE grades SET score = ?, remarks = ? WHERE id = ?");
@@ -74,7 +74,7 @@ class GradeModel{
     return $success ? ["success" => true] : ["error" => "Update failed"];
   }
 
-  // ❌ Delete grade
+  //  Delete grade
   public static function delete($grade_id) {
     global $conn;
     $stmt = $conn->prepare("DELETE FROM grades WHERE id = ?");
