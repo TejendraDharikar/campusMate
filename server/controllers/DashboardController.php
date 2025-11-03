@@ -2,24 +2,14 @@
 require_once __DIR__ . '/../models/DashboardModel.php';
 require_once __DIR__ . '/../middleware/converterMiddleware.php';
 
-class DashboardController{
+class DashboardController
+{
+  public static function getStatsByTeacher()
+  {
+    $data = json_decode(file_get_contents("php://input"), true);
+    $user_id = $data['teacher_id'] ?? null;
 
-  public static function getCount(){
-
-    $totalstat=DashboardModel::getTotalStats();
-   
-
-    echo json_encode([
-     "success"=>$totalstat
-    ]);
-
-  }
-
-   public static function getStatsByTeacher() {
-      $data=json_decode(file_get_contents("php://input"),true);
-      $user_id=$data['teacher_id'] ?? null;
-
-      if (!$user_id) {
+    if (!$user_id) {
       echo json_encode(["error" => "Missing user_id"]);
       return;
     }
@@ -34,5 +24,24 @@ class DashboardController{
     echo json_encode($stats);
   }
 
+
+  public static function getStatsByStudent()
+  {
+    $data = json_decode(file_get_contents("php://input"), true);
+    $user_id = $data['student_id'] ?? null;
+
+    if (!$user_id) {
+      echo json_encode(["error" => "Missing user_id"]);
+      return;
+    }
+
+    $student_id = ConverterMiddleware::toStudentId($user_id);
+    if (!$student_id) {
+      echo json_encode(["error" => "No student profile found for user_id $user_id"]);
+      return;
+    }
+
+    $stats = DashboardModel::getStudentStatsByStudent($student_id);
+    echo json_encode($stats);
+  }
 }
-?>

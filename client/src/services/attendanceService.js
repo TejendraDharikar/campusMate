@@ -1,28 +1,27 @@
 import axios from "axios";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-
-export const fetchAllAttendance = async ()=>{
-   try {
+export const fetchAllAttendance = async () => {
+  try {
     const res = await axios.get(`${BASE_URL}/api/attendance/all`);
     return res.data;
   } catch (err) {
-    throw new Error(err.response?.data?.message || 'Failed to add attendance');
+    throw new Error(err.response?.data?.message || "Failed to add attendance");
   }
 };
 
 export const fetchAttendanceById = async (attendanceId) => {
   try {
-    const res = await axios.post(`${BASE_URL}/api/attendance/studentById`,{
-      attendanceId
+    const res = await axios.post(`${BASE_URL}/api/attendance/studentById`, {
+      attendanceId,
     });
     return res.data;
   } catch (err) {
-    throw new Error(err.response?.data?.message || 'Failed to fetch attendance');
+    throw new Error(
+      err.response?.data?.message || "Failed to fetch attendance"
+    );
   }
 };
-
-
 
 export const fetchAttendance = async (userid) => {
   try {
@@ -31,14 +30,15 @@ export const fetchAttendance = async (userid) => {
     });
     return res.data;
   } catch (err) {
-    throw new Error(err.response?.data?.message || 'Failed to fetch attendance');
+    throw new Error(
+      err.response?.data?.message || "Failed to fetch attendance"
+    );
   }
 };
 
-
-export const addAttendance = async (studentId,courseId,date,status)=>{
-   try {
-     console.log("Sending to backend:", { studentId, courseId, date, status });
+export const addAttendance = async (studentId, courseId, date, status) => {
+  try {
+    console.log("Sending to backend:", { studentId, courseId, date, status });
 
     const res = await axios.post(`${BASE_URL}/api/attendance/add`, {
       student_id: studentId,
@@ -48,34 +48,41 @@ export const addAttendance = async (studentId,courseId,date,status)=>{
     });
     return res.data;
   } catch (err) {
-    throw new Error(err.response?.data?.message || 'Failed to add attendance');
+    throw new Error(err.response?.data?.message || "Failed to add attendance");
   }
 };
 
-export const updateAttendance = async (id,date,status)=>{
-  console.log("sending in backend:",id,date,status);
-  
-   try {
-    const res = await axios.patch(`${BASE_URL}/api/attendance/update?id=${id}`, {
-      id: id,
-      date: date,
-      status: status,
-    });
-    console.log("response from backend:",res.data);
+export const updateAttendance = async (id, date, status) => {
+  console.log("sending in backend:", id, date, status);
+
+  try {
+    const res = await axios.patch(
+      `${BASE_URL}/api/attendance/update?id=${id}`,
+      {
+        id: id,
+        date: date,
+        status: status,
+      }
+    );
+    console.log("response from backend:", res.data);
     return res.data;
   } catch (err) {
-    throw new Error(err.response?.data?.message || 'Failed to update attendance');
+    throw new Error(
+      err.response?.data?.message || "Failed to update attendance"
+    );
   }
 };
 
+export const deleteAttendance = async (Id) => {
+  try {
+    const res = await axios.delete(
+      `${BASE_URL}/api/attendance/delete?id=${Id}`
+    );
 
-
-export const deleteAttendance = async (Id)=>{
-   try {
-    const res = await axios.delete(`${BASE_URL}/api/attendance/delete?id=${Id}`);
-    
     return res.data;
   } catch (err) {
-    throw new Error(err.response?.data?.message || 'Failed to delete attendance');
+    throw new Error(
+      err.response?.data?.message || "Failed to delete attendance"
+    );
   }
 };

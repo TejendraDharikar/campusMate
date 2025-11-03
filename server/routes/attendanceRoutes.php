@@ -6,18 +6,14 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 if ($uri === '/api/attendance/all' && $method === 'GET') {
   AttendanceController::getAllStudentsAttendance();
-}
-elseif ($uri === '/api/attendance/student' && $method === 'POST') {
+} elseif ($uri === '/api/attendance/student' && $method === 'POST') {
   AttendanceController::getStudentAttendance();
-}elseif ($uri === '/api/attendance/studentById' && $method === 'POST') {
+} elseif ($uri === '/api/attendance/studentById' && $method === 'POST') {
   AttendanceController::getAttendanceById();
-}elseif($uri === '/api/attendance/add' && $method === 'POST'){
+} elseif ($uri === '/api/attendance/add' && $method === 'POST') {
   AttendanceController::addStudentAttendance();
-}elseif($uri === '/api/attendance/update' && $method === 'PATCH'){
+} elseif ($uri === '/api/attendance/update' && $method === 'PATCH') {
   AttendanceController::updateStudentAttendance();
-}elseif($uri === '/api/attendance/delete' && $method === 'DELETE'){
+} elseif ($uri === '/api/attendance/delete' && $method === 'DELETE') {
   AttendanceController::deleteStudentAttendance();
 }
-
-
-?>

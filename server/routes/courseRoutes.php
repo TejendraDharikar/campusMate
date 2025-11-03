@@ -8,15 +8,12 @@ if ($uri === '/api/courses/all' && $method === 'POST') {
   CourseController::allStudentCourses();
 } elseif ($uri === '/api/courses/student' && $method === 'POST') {
   CourseController::studentCourses();
-}elseif($uri==='/api/courses/byid' && $method ==='POST'){
+} elseif ($uri === '/api/courses/byid' && $method === 'POST') {
   CourseController::getById();
-}elseif ($uri === '/api/courses/add' && $method === 'POST') {
+} elseif ($uri === '/api/courses/add' && $method === 'POST') {
   CourseController::addCourse();
-}elseif($uri==='/api/courses/update'&& $method ==='PATCH'){
+} elseif ($uri === '/api/courses/update' && $method === 'PATCH') {
   CourseController::updateCourse();
-}elseif($uri === '/api/courses/delete' && $method === 'DELETE'){
+} elseif ($uri === '/api/courses/delete' && $method === 'DELETE') {
   CourseController::deleteCourse();
 }
-
-
-?>

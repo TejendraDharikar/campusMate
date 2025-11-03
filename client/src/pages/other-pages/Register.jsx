@@ -99,11 +99,19 @@ export default function Register() {
             >
               Department
             </label>
-            <input
+            <select
               {...register("department")}
               placeholder="Department"
               className="w-full px-4 py-1 border rounded-md border-gray-300"
-            />
+            >
+              <option value="">Select Role</option>
+              <option value="student">computer science</option>
+              <option value="teacher">artificial intelligence</option>
+              <option value="teacher">Math</option>
+              <option value="teacher">Digital Marketing</option>
+              <option value="teacher">Python</option>
+              </select>
+
             <p className="text-red-500 text-sm">{errors.department?.message}</p>
           </div>
 
@@ -113,14 +121,15 @@ export default function Register() {
                 htmlFor="role"
                 className="block text-sm font-medium text-gray-700"
               >
-                Enrollment ID
+                Age
               </label>
               <input
-                {...register("enrollment_number")}
-                placeholder="Enrollment Number"
+                {...register("age")}
+                placeholder="age"
                 className="w-full px-4 py-1 border rounded-md border-gray-300"
               />
             </div>
+            
           )}
           {role === "teacher" && (
             <div>
@@ -128,11 +137,11 @@ export default function Register() {
                 htmlFor="role"
                 className="block text-sm font-medium text-gray-700"
               >
-                Employee ID
+               Phone Number
               </label>
               <input
-                {...register("employee_id")}
-                placeholder="Employee ID"
+                {...register("phone")}
+                placeholder="phone number"
                 className="w-full px-4 py-1 border rounded-md border-gray-300"
               />
             </div>

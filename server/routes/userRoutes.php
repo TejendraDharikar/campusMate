@@ -9,4 +9,3 @@ $method = $_SERVER['REQUEST_METHOD'];
 if ($uri === '/api/register' && $method === 'POST') {
   UserController::register();
 }
-?>

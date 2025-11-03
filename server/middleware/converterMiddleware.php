@@ -1,8 +1,10 @@
 <?php
 require_once __DIR__ . "/../config/db.php";
 
-class ConverterMiddleware{
-  public static function toTeacherId($user_id){
+class ConverterMiddleware
+{
+  public static function toTeacherId($user_id)
+  {
     global $conn;
     $stmt = $conn->prepare("SELECT id FROM teacher_profiles WHERE user_id = ?");
     $stmt->bind_param("i", $user_id);
@@ -11,7 +13,8 @@ class ConverterMiddleware{
     return $result['id'] ?? null;
   }
 
-  public static function toStudentId($user_id){
+  public static function toStudentId($user_id)
+  {
     global $conn;
     $stmt = $conn->prepare("SELECT id FROM students WHERE user_id = ?");
     $stmt->bind_param("i", $user_id);
@@ -20,4 +23,3 @@ class ConverterMiddleware{
     return $result['id'] ?? null;
   }
 }
-?>

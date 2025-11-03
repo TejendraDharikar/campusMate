@@ -1,18 +1,21 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addCourse, deleteCourse, updateCourse } from "../services/courseService";
+import {
+  addCourse,
+  deleteCourse,
+  updateCourse,
+} from "../services/courseService";
 
 export const useCourseMutation = () => {
-  const queryClient = useQueryClient(); 
-
+  const queryClient = useQueryClient();
 
   const addCourseMutation = useMutation({
-    mutationFn:(data)=>{
-      console.log("mutation data :",data);
-      return addCourse(data)
+    mutationFn: (data) => {
+      console.log("mutation data :", data);
+      return addCourse(data);
     },
-    onSuccess:()=>{
-      queryClient.invalidateQueries({ 
-        queryKey:["allStudentCourses"]
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["allStudentCourses"],
       });
       alert("Course added successfully");
     },
@@ -20,30 +23,28 @@ export const useCourseMutation = () => {
       console.error("Error adding course from mutation:", error);
       alert("Failed to add course");
     },
-  })
+  });
 
-
-  const update= useMutation({
-    mutationFn:(data)=>{
-      console.log("mutation data:",data);
-      return updateCourse(data)
+  const update = useMutation({
+    mutationFn: (data) => {
+      console.log("mutation data:", data);
+      return updateCourse(data);
     },
-    onSuccess:()=>{
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey:["allStudentCourses"]
+        queryKey: ["allStudentCourses"],
       });
       alert("Course updated successfully");
     },
-    onError:(error)=>{
-      console.error("error updating course in mutation",error);
-      alert("failed to update course")
-    }
-  })
-
+    onError: (error) => {
+      console.error("error updating course in mutation", error);
+      alert("failed to update course");
+    },
+  });
 
   const deleteCourseMutation = useMutation({
     mutationFn: (student_id) => deleteCourse(student_id),
-    onSuccess: () => {    
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["allStudentCourses"] });
       alert("Course enrollment deleted successfully");
     },
@@ -51,7 +52,7 @@ export const useCourseMutation = () => {
 
   return {
     addCourse: addCourseMutation.mutate,
-    updateCourse:update.mutate,
+    updateCourse: update.mutate,
     deleteCourse: deleteCourseMutation.mutate,
   };
 };

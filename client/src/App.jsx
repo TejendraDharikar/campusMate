@@ -1,8 +1,11 @@
-import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import Login from "./pages/other-pages/Login";
 import StudentDashboard from "./pages/student-pages/StudentDashboard";
 import TeacherDashboard from "./pages/teacher-pages/TeacherDashboard";
-// import AdminDashboard from "./pages/other-pages/AdminDashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Register from "./pages/other-pages/Register";
 import DashboardLayout from "./components/DashboardLayout";
@@ -16,15 +19,14 @@ import AttendanceForm from "./components/AttendanceForm";
 import GradeForm from "./components/GradeForm";
 import CourseForm from "./components/CourseForm";
 
-
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
   },
   {
-    path:"/register",
-    element:<Register/>
+    path: "/register",
+    element: <Register />,
   },
   {
     path: "/student-dashboard",
@@ -37,123 +39,115 @@ const router = createBrowserRouter([
     ),
   },
   {
-path:"/student-grade",
-element:(
- <DashboardLayout>
-        <MyGrades/>
-        </DashboardLayout>
-),
-  },
-   {
-path:"/student-attendance",
-element:(
- <DashboardLayout>
-        <StudentAttendance />
-        </DashboardLayout>
-),
+    path: "/student-grade",
+    element: (
+      <DashboardLayout>
+        <MyGrades />
+      </DashboardLayout>
+    ),
   },
   {
-  path:"/student-courses",
-  element:(
-    <DashboardLayout>
-      <MyCourses/>
-    </DashboardLayout>
-  )
+    path: "/student-attendance",
+    element: (
+      <DashboardLayout>
+        <StudentAttendance />
+      </DashboardLayout>
+    ),
+  },
+  {
+    path: "/student-courses",
+    element: (
+      <DashboardLayout>
+        <MyCourses />
+      </DashboardLayout>
+    ),
   },
   {
     path: "/teacher-dashboard",
     element: (
       <ProtectedRoute allowedRoles={["teacher"]}>
         <DashboardLayout>
-        <TeacherDashboard />
+          <TeacherDashboard />
         </DashboardLayout>
       </ProtectedRoute>
     ),
   },
-   {
-path:"/manage-courses",
-element:(
- <DashboardLayout>
+  {
+    path: "/manage-courses",
+    element: (
+      <DashboardLayout>
         <ManageCourses />
-        </DashboardLayout>
-),
+      </DashboardLayout>
+    ),
   },
   {
-path:"/courseForm",
-element:(
- <DashboardLayout>
+    path: "/courseForm",
+    element: (
+      <DashboardLayout>
         <CourseForm />
-        </DashboardLayout>
-),
+      </DashboardLayout>
+    ),
   },
-   {
-path:"/courseForm/:id",
-element:(
- <DashboardLayout>
+  {
+    path: "/courseForm/:id",
+    element: (
+      <DashboardLayout>
         <CourseForm />
-        </DashboardLayout>
-),
+      </DashboardLayout>
+    ),
   },
   {
-path:"/teacher-grade",
-element:(
- <DashboardLayout>
-        < ManageGrades/>
-        </DashboardLayout>
-),
-  },
-    {
-path:"/gradeForm",
-element:(
- <DashboardLayout>
-        < GradeForm/>
-        </DashboardLayout>
-),
+    path: "/teacher-grade",
+    element: (
+      <DashboardLayout>
+        <ManageGrades />
+      </DashboardLayout>
+    ),
   },
   {
-path:"/gradeForm/:grade_id",
-element:(
- <DashboardLayout>
+    path: "/gradeForm",
+    element: (
+      <DashboardLayout>
         <GradeForm />
-        </DashboardLayout>
-),
+      </DashboardLayout>
+    ),
   },
   {
-path:"/teacher-attendance",
-element:(
- <DashboardLayout>
+    path: "/gradeForm/:grade_id",
+    element: (
+      <DashboardLayout>
+        <GradeForm />
+      </DashboardLayout>
+    ),
+  },
+  {
+    path: "/teacher-attendance",
+    element: (
+      <DashboardLayout>
         <TeacherAttendance />
-        </DashboardLayout>
-),
+      </DashboardLayout>
+    ),
   },
   {
-path:"/attendanceForm",
-element:(
- <DashboardLayout>
+    path: "/attendanceForm",
+    element: (
+      <DashboardLayout>
         <AttendanceForm />
-        </DashboardLayout>
-),
+      </DashboardLayout>
+    ),
   },
- {
-path:"/attendanceForm/:id",
-element:(
- <DashboardLayout>
-        <AttendanceForm />
-        </DashboardLayout>
-),
-  },
-  // {
-  //   path: "/admin",
-  //   element: (
-  //     <ProtectedRoute allowedRoles={["admin"]}>
-  //       <AdminDashboard />
-  //     </ProtectedRoute>
-  //   ),
-  // },
   {
-  path: "*",
-  element: <Navigate to="/" replace />
-}
+    path: "/attendanceForm/:id",
+    element: (
+      <DashboardLayout>
+        <AttendanceForm />
+      </DashboardLayout>
+    ),
+  },
+  {
+    path: "*",
+    element: <Navigate to="/" replace />,
+  },
 ]);
 
 function App() {

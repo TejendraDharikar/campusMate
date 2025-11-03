@@ -1,5 +1,6 @@
 <?php
-function requireAuth() {
+function requireAuth()
+{
   session_start();
   if (!isset($_SESSION['user'])) {
     http_response_code(401);
@@ -7,4 +8,3 @@ function requireAuth() {
     exit;
   }
 }
-?>

@@ -1,12 +1,14 @@
 <?php
-class GradeModel{
+class GradeModel
+{
 
-  
 
 
-  public static function allGradesByTeacher($teacher_id){
+
+  public static function allGradesByTeacher($teacher_id)
+  {
     global $conn;
-    $stmt=$conn->prepare("SELECT 
+    $stmt = $conn->prepare("SELECT 
     g.id AS grade_id,
     s.name AS student_name,
     c.title AS course_name,
@@ -18,13 +20,14 @@ class GradeModel{
     JOIN courses c ON g.course_id = c.id
     WHERE c.teacher_id = ?
     ORDER BY g.graded_at DESC;");
-    $stmt->bind_param("i",$teacher_id);
+    $stmt->bind_param("i", $teacher_id);
     $stmt->execute();
     $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     return $result;
   }
 
-   public static function getByStudent($student_id) {
+  public static function getByStudent($student_id)
+  {
     global $conn;
     $stmt = $conn->prepare("
       SELECT 
@@ -44,44 +47,45 @@ class GradeModel{
 
 
 
-  public static function getById($grade_id) {
+  public static function getById($grade_id)
+  {
     global $conn;
     $stmt = $conn->prepare("SELECT * FROM grades WHERE id = ?");
     $stmt->bind_param("i", $grade_id);
     $stmt->execute();
-    $result=$stmt->get_result()->fetch_assoc();
+    $result = $stmt->get_result()->fetch_assoc();
     $stmt->close();
-    return $result?:["error"=>"Grade not found in database"];
+    return $result ?: ["error" => "Grade not found in database"];
   }
 
 
 
   // Add grade
-   public static function add($student_id, $course_id, $grade,$remarks) {
+  public static function add($student_id, $course_id, $grade, $remarks)
+  {
     global $conn;
     $stmt = $conn->prepare("INSERT INTO grades (student_id, course_id, score,remarks) VALUES ( ?, ?,?, ?)");
-    $stmt->bind_param("iiss", $student_id, $course_id, $grade,$remarks);
+    $stmt->bind_param("iiss", $student_id, $course_id, $grade, $remarks);
     return $stmt->execute();
   }
 
-    // Update grade
-  public static function update($grade_id, $grade, $remarks) {
+  // Update grade
+  public static function update($grade_id, $grade, $remarks)
+  {
     global $conn;
     $stmt = $conn->prepare("UPDATE grades SET score = ?, remarks = ? WHERE id = ?");
     $stmt->bind_param("ssi", $grade, $remarks, $grade_id);
-     $success=$stmt->execute();
+    $success = $stmt->execute();
     $stmt->close();
     return $success ? ["success" => true] : ["error" => "Update failed"];
   }
 
   //  Delete grade
-  public static function delete($grade_id) {
+  public static function delete($grade_id)
+  {
     global $conn;
     $stmt = $conn->prepare("DELETE FROM grades WHERE id = ?");
     $stmt->bind_param("i", $grade_id);
     return $stmt->execute();
   }
-
 }
-
-?>

@@ -1,11 +1,13 @@
 <?php
 
-class AttendanceModel {
+class AttendanceModel
+{
 
-public static function fetchAllStudent() {
-  global $conn;
+  public static function fetchAllStudent()
+  {
+    global $conn;
 
-  $query = "
+    $query = "
     SELECT a.id, a.date, a.status, s.name AS student, c.title AS course
     FROM attendance a
     JOIN students s ON a.student_id = s.id
@@ -13,39 +15,41 @@ public static function fetchAllStudent() {
     ORDER BY a.date DESC
   ";
 
-  $stmt = $conn->prepare($query);
-  
-  $stmt->execute();
-  $result = $stmt->get_result();
+    $stmt = $conn->prepare($query);
 
-  $records = [];
-  while ($row = $result->fetch_assoc()) {
-    $records[] = [
-      "id" => $row['id'],
-      "date" => $row['date'],
-      "student" => $row['student'],
-      "course" => $row['course'],
-      "status" => ucfirst($row['status']),
-    ];
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $records = [];
+    while ($row = $result->fetch_assoc()) {
+      $records[] = [
+        "id" => $row['id'],
+        "date" => $row['date'],
+        "student" => $row['student'],
+        "course" => $row['course'],
+        "status" => ucfirst($row['status']),
+      ];
+    }
+
+    $stmt->close();
+    return $records;
   }
 
-  $stmt->close();
-  return $records;
-}
+
+  public static function getAttendanceById($id)
+  {
+    global $conn;
+    $stmt = $conn->prepare("SELECT * FROM attendance WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+    return $result ?: ["error" => "Attendance not found"];
+  }
 
 
-public static function getAttendanceById($id) {
-  global $conn;
-  $stmt = $conn->prepare("SELECT * FROM attendance WHERE id = ?");
-  $stmt->bind_param("i", $id);
-  $stmt->execute();
-  $result = $stmt->get_result()->fetch_assoc();
-  $stmt->close();
- return $result ?: ["error" => "Attendance not found"];
-}
-
-
-  public static function getByStudent($student_id) {
+  public static function getByStudent($student_id)
+  {
     global $conn;
 
     $query = "
@@ -67,7 +71,7 @@ public static function getAttendanceById($id) {
       $records[] = [
         "date" => $row['date'],
         "course" => $row['course'],
-        "status" => ucfirst($row['status']),
+        "status" => ucfirst($row['status']), //ucfirst make first letter uppercase
       ];
     }
 
@@ -77,46 +81,46 @@ public static function getAttendanceById($id) {
 
 
   // add attendance for student
-    
-  public static function addByStudent($student_id,$course_id,$date,$status){
+
+  public static function addByStudent($student_id, $course_id, $date, $status)
+  {
     global $conn;
 
-    $query="INSERT INTO attendance (student_id,course_id,date,status) VALUES (?,?,?,?)";
+    $query = "INSERT INTO attendance (student_id,course_id,date,status) VALUES (?,?,?,?)";
     $stmt = $conn->prepare($query);
-    $stmt -> bind_param("iiss",$student_id,$course_id,$date,$status);
+    $stmt->bind_param("iiss", $student_id, $course_id, $date, $status);
 
-    if ($stmt->execute()){
+    if ($stmt->execute()) {
       $insertedId = $stmt->insert_id;
       $stmt->close();
-      return["success"=>true,"id"=>$insertedId];
-    }else{
-       error_log("SQL Error: " . $stmt->error);
+      return ["success" => true, "id" => $insertedId];
+    } else {
+      error_log("SQL Error: " . $stmt->error);
       $stmt->close();
-      return["error"=>"insert failed"];
+      return ["error" => "insert failed"];
     }
   }
 
 
 
-  public static function updateById($id,$date,$status){
- global $conn;
-  $stmt = $conn->prepare("UPDATE attendance SET status = ?,date=? WHERE id = ?");
-  $stmt->bind_param("ssi", $status,$date, $id);
-  $success = $stmt->execute();
-  $stmt->close();
-  return $success ? ["success" => true] : ["error" => "Update failed"];
-
+  public static function updateById($id, $date, $status)
+  {
+    global $conn;
+    $stmt = $conn->prepare("UPDATE attendance SET status = ?,date=? WHERE id = ?");
+    $stmt->bind_param("ssi", $status, $date, $id);
+    $success = $stmt->execute();
+    $stmt->close();
+    return $success ? ["success" => true] : ["error" => "Update failed"];
   }
 
 
-public static function deleteById($id){
- global $conn;
-  $stmt = $conn->prepare("DELETE FROM attendance WHERE id = ?");
-  $stmt->bind_param("i", $id);
-  $success = $stmt->execute();
-  $stmt->close();
-  return $success ? ["success" => true] : ["error" => "Delete failed"];
+  public static function deleteById($id)
+  {
+    global $conn;
+    $stmt = $conn->prepare("DELETE FROM attendance WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    $success = $stmt->execute();
+    $stmt->close();
+    return $success ? ["success" => true] : ["error" => "Delete failed"];
   }
-  
 }
-?>

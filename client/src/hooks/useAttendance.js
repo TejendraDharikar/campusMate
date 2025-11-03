@@ -1,22 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchAllAttendance, fetchAttendance, fetchAttendanceById } from "../services/attendanceService";
+import {
+  fetchAllAttendance,
+  fetchAttendance,
+  fetchAttendanceById,
+} from "../services/attendanceService";
 
-export const useAllAttendance = ()=>{
+export const useAllAttendance = () => {
   return useQuery({
-    queryKey:["allAttendance"],
-    queryFn:()=>{
-      console.log("📤 Fetching all attendance records");
+    queryKey: ["allAttendance"],
+    queryFn: () => {
+      console.log(" Fetching all attendance records");
       return fetchAllAttendance();
     },
 
-    onError:(error)=>{
-      console.error("Failed to fetch all attendance",error);
-      
+    onError: (error) => {
+      console.error("Failed to fetch all attendance", error);
     },
-  }
-  );
-}
-
+  });
+};
 
 export const useAttendanceById = (attendanceId) => {
   return useQuery({
@@ -30,15 +31,13 @@ export const useAttendance = (studentId) => {
   return useQuery({
     queryKey: ["attendance", studentId],
     queryFn: () => {
-      console.log("📤 Fetching attendance for studentId:", studentId);
+      console.log("Fetching attendance for studentId:", studentId);
 
-      return fetchAttendance(studentId)},
+      return fetchAttendance(studentId);
+    },
     enabled: !!studentId,
     onError: (error) => {
-  console.error("Attendance fetch failed:", error.message);
-}
+      console.error("Attendance fetch failed:", error.message);
+    },
   });
 };
-
-
-

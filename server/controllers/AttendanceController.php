@@ -2,30 +2,34 @@
 require_once __DIR__ . '/../models/AttendanceModel.php';
 require_once __DIR__ . '/../middleware/converterMiddleware.php';
 
-class AttendanceController {
+class AttendanceController
+{
 
-  // 📋 Get all attendance records
-  public static function getAllStudentsAttendance() {
+  //  Get all attendance records
+  public static function getAllStudentsAttendance()
+  {
     $records = AttendanceModel::fetchAllStudent();
     echo json_encode($records);
   }
 
 
 
-  public static function getAttendanceById() {
+  public static function getAttendanceById()
+  {
     $input = json_decode(file_get_contents("php://input"), true);
     $id = $input['attendanceId'] ?? null;
     if (!$id) {
       echo json_encode(["error" => "Missing attendanceId"]);
       exit;
     }
-  $record = AttendanceModel::getAttendanceById($id);
-  echo json_encode($record);
-}
+    $record = AttendanceModel::getAttendanceById($id);
+    echo json_encode($record);
+  }
 
 
-  // 🔍 Get attendance for a specific student (via user_id)
-  public static function getStudentAttendance() {
+  // Get attendance for a specific student (via user_id)
+  public static function getStudentAttendance()
+  {
     $input = json_decode(file_get_contents("php://input"), true);
     $user_id = $input['user_id'] ?? null;
 
@@ -48,11 +52,12 @@ class AttendanceController {
 
 
 
-  // ➕ Add attendance
-  public static function addStudentAttendance() {
+  //  Add attendance
+  public static function addStudentAttendance()
+  {
     $data = json_decode(file_get_contents("php://input"), true);
-    
-   error_log("Incoming payload: " . json_encode($data));
+
+    error_log("Incoming payload: " . json_encode($data));
 
     $student_id = $data['student_id'] ?? null;
     $course_id = $data['course_id'] ?? null;
@@ -68,8 +73,9 @@ class AttendanceController {
     echo json_encode($result);
   }
 
-  // ✏️ Update attendance
-  public static function updateStudentAttendance() {
+  // Update attendance
+  public static function updateStudentAttendance()
+  {
     $data = json_decode(file_get_contents("php://input"), true);
     $id = $data['id'] ?? null;
     $status = $data['status'] ?? null;
@@ -80,14 +86,15 @@ class AttendanceController {
       echo json_encode(["error" => "Missing id or date or status"]);
       exit;
     }
-     error_log("Received PATCH payload: " . json_encode($data));
-     
-    $result = AttendanceModel::updateById($id,$date ,$status);
+    error_log("Received PATCH payload: " . json_encode($data));
+
+    $result = AttendanceModel::updateById($id, $date, $status);
     echo json_encode($result);
   }
 
-  // ❌ Delete attendance
-  public static function deleteStudentAttendance() {
+  //  Delete attendance
+  public static function deleteStudentAttendance()
+  {
     parse_str($_SERVER['QUERY_STRING'], $params);
     $id = $params['id'] ?? null;
 
@@ -100,4 +107,3 @@ class AttendanceController {
     echo json_encode($result);
   }
 }
-?>
