@@ -21,6 +21,7 @@ export default function Register() {
     mutationFn: registerUser,
     onSuccess: (data) => {
       console.log("Registered:", data);
+      mutation.mutate(data);
       navigate("/");
     },
     onError: (error) => {
@@ -104,13 +105,13 @@ export default function Register() {
               placeholder="Department"
               className="w-full px-4 py-1 border rounded-md border-gray-300"
             >
-              <option value="">Select Role</option>
-              <option value="student">computer science</option>
-              <option value="teacher">artificial intelligence</option>
-              <option value="teacher">Math</option>
-              <option value="teacher">Digital Marketing</option>
-              <option value="teacher">Python</option>
-              </select>
+              <option value='computer science'>computer science</option>
+               <option value="Math">Math</option>
+                <option value="Digital Marketing">Digital Marketing</option>
+                 <option value='Python'>Python</option>
+                  <option value="artificial intelligence">artifical intelligence</option>
+            </select>
+            
 
             <p className="text-red-500 text-sm">{errors.department?.message}</p>
           </div>

@@ -12,3 +12,4 @@ class AuthModel
         return $user ?: null;
     }
 }
+?>

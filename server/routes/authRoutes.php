@@ -7,3 +7,4 @@ $method = $_SERVER['REQUEST_METHOD'];
 if ($uri === '/api/login' && $method === 'POST') {
   AuthController::login();
 }
+?>

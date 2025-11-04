@@ -1,14 +1,17 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuthStore } from '../../context/useAuthStore';
-import { useAllAttendance} from '../../hooks/useAttendance';
+import { useAllAttendance, useAttendanceByCourse} from '../../hooks/useAttendance';
 import { useAttendanceMutations } from '../../hooks/useAttendanceMutations';
+import AttendanceNavbar from '../../components/AttendanceNavbar';
 
 
 const TeacherAttendance = () => {
   const navigate = useNavigate();
   const { user } = useAuthStore();
   const { deleteAttendance } = useAttendanceMutations();
-  const { data:attendanceRecords,refetch, isLoading, isError } = useAllAttendance();
+  const {data:attendanceRecords,refetch, isLoading, isError} = useAttendanceByCourse();
+
+
 
 const handleDelete = (id) => {
   if (confirm("Are you sure you want to delete this record?")) {
@@ -31,6 +34,7 @@ console.log("Logged in user:", user);
 
   return (
     <div>
+      <AttendanceNavbar/>
       <h2 className="text-2xl font-bold text-blue-800 text-center mt-2">Attendance Records</h2>
       <div className='text-right'> <button 
       className="border-2 border-green-500 px-4 py-2 rounded 

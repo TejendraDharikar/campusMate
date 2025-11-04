@@ -12,8 +12,11 @@ if ($uri === '/api/attendance/all' && $method === 'GET') {
   AttendanceController::getAttendanceById();
 } elseif ($uri === '/api/attendance/add' && $method === 'POST') {
   AttendanceController::addStudentAttendance();
-} elseif ($uri === '/api/attendance/update' && $method === 'PATCH') {
+} elseif($uri==='/api/attendance/bycourse' && $method==='POST'){
+  AttendanceController::getAttendanceByCourseId();
+}elseif ($uri === '/api/attendance/update' && $method === 'PATCH') {
   AttendanceController::updateStudentAttendance();
 } elseif ($uri === '/api/attendance/delete' && $method === 'DELETE') {
   AttendanceController::deleteStudentAttendance();
 }
+?>

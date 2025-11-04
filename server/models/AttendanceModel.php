@@ -80,6 +80,28 @@ class AttendanceModel
   }
 
 
+
+  public static function getAttendanceByCourseId($course_id){
+    global $conn;
+    $stmt=$conn->prepare(("SELECT a.id, a.date, a.status, s.name AS student, c.title AS course
+    FROM attendance a
+    JOIN students s ON a.student_id = s.id
+    JOIN courses c ON a.course_id = c.id
+    WHERE a.course_id=?
+    ORDER BY a.date DESC "));
+    $stmt->bind_param("i",$course_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+  $data = [];
+  while ($row = $result->fetch_assoc()) {
+    $data[] = $row;
+  }
+  return $data;
+
+  }
+
+
   // add attendance for student
 
   public static function addByStudent($student_id, $course_id, $date, $status)
@@ -124,3 +146,4 @@ class AttendanceModel
     return $success ? ["success" => true] : ["error" => "Delete failed"];
   }
 }
+?>

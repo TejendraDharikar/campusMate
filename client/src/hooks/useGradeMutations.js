@@ -21,8 +21,8 @@ export const useGradeMutations = (teacher_id) => {
   });
 
   const update = useMutation({
-    mutationFn: ({ grade_id, grade, remarks }) =>
-      updateGrade(grade_id, grade, remarks),
+    mutationFn: (data) =>
+      updateGrade(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["allStudentGrades"] });
       alert("Grade updated successfully");

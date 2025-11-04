@@ -52,7 +52,7 @@ export const updateCourse = async (id, student_id, course_id) => {
   console.log("sending to backend:", id, student_id, course_id);
 
   try {
-    const res = await axios.patch(`${BASE_URL}api/courses/id=${id}`, {
+    const res = await axios.patch(`${BASE_URL}/api/courses/id=${id}`, {
       id: id,
       student_id: student_id,
       course_id: course_id,

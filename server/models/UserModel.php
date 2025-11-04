@@ -52,3 +52,4 @@ class UserModel
         return $stmt->execute();
     }
 }
+?>

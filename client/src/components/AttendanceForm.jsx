@@ -10,6 +10,7 @@ const AttendanceForm = () => {
   const isEdit = Boolean(id);
   const { addAttendance, updateAttendance } = useAttendanceMutations();
   const { data: existing, isPending } = useAttendanceById(id);
+  const today =new Date().toLocaleDateString("en-CA");
   const {
     register,
     handleSubmit,
@@ -83,6 +84,10 @@ const AttendanceForm = () => {
           type="date"
           {...register("date", { required: true })}
           className="w-full border p-2 rounded"
+          readOnly={isEdit}
+          min={today}
+          max={today}
+          defaultValue={today}
         />
         {errors.date && <p className="text-red-500">Date is required</p>}
 

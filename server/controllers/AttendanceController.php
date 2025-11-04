@@ -51,6 +51,18 @@ class AttendanceController
 
 
 
+  public static function getAttendanceByCourseId(){
+     $input = json_decode(file_get_contents("php://input"), true);
+    $course_id = $input['courseId'] ?? null;
+    if (!$course_id) {
+      echo json_encode(["error" => "Missing course Id"]);
+      exit;
+    }
+    $record = AttendanceModel::getAttendanceByCourseId($course_id);
+    echo json_encode($record);
+  }
+
+
 
   //  Add attendance
   public static function addStudentAttendance()
@@ -107,3 +119,4 @@ class AttendanceController
     echo json_encode($result);
   }
 }
+?>

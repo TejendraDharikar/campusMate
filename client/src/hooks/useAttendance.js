@@ -1,9 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import {
+  attendanceByCourse,
   fetchAllAttendance,
   fetchAttendance,
   fetchAttendanceById,
 } from "../services/attendanceService";
+import {useSearchParams} from "react-router-dom";
+
 
 export const useAllAttendance = () => {
   return useQuery({
@@ -38,6 +41,22 @@ export const useAttendance = (studentId) => {
     enabled: !!studentId,
     onError: (error) => {
       console.error("Attendance fetch failed:", error.message);
+    },
+  });
+};
+
+
+export const useAttendanceByCourse=()=>{
+const [searchParams]= useSearchParams();
+const courseId = searchParams.get("courseId");
+
+
+  return useQuery({
+    queryKey:["courseAttendance",courseId],
+    queryFn:()=>attendanceByCourse(courseId),
+    enabled:!!courseId,
+    onError:(error)=>{
+    console.error("Attendance fetch failed:", error.message);
     },
   });
 };

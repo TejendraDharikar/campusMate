@@ -45,3 +45,4 @@ class DashboardController
     echo json_encode($stats);
   }
 }
+?>

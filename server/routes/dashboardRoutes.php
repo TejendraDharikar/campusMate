@@ -10,3 +10,4 @@ if ($uri === '/api/dashboard/student' && $method === 'POST') {
 } elseif ($uri === '/api/dashboard/teacher' && $method === 'POST') {
   DashboardController::getStatsByTeacher();
 }
+?>

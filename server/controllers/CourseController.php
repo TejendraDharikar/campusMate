@@ -122,3 +122,4 @@ class CourseController
     echo json_encode(["success" => $success]);
   }
 }
+?>

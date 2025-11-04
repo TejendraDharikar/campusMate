@@ -36,6 +36,22 @@ export const fetchAttendance = async (userid) => {
   }
 };
 
+
+export const attendanceByCourse=async (courseId)=>{
+   console.log("Sending to backend:", courseId);
+  try{
+    const res = await axios.post(`${BASE_URL}/api/attendance/bycourse?courseId=${courseId}`,{
+      courseId:courseId
+    })
+    
+    console.log("recieved from backend:",res.data);
+    return res.data;
+  }catch(err){
+    throw new Error(err.response?.data?.message || "Failed to add attendance");
+  }
+}
+
+
 export const addAttendance = async (studentId, courseId, date, status) => {
   try {
     console.log("Sending to backend:", { studentId, courseId, date, status });

@@ -89,3 +89,4 @@ ORDER BY sc.enrolled_at DESC");
     return $stmt->execute();
   }
 }
+?>

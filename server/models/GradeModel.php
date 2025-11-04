@@ -89,3 +89,4 @@ class GradeModel
     return $stmt->execute();
   }
 }
+?>

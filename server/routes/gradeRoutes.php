@@ -17,3 +17,4 @@ if ($uri === '/api/grade/all' && $method === 'POST') {
 } elseif ($uri === '/api/grade/delete' && $method === 'DELETE') {
   GradeController::delete();
 }
+?>

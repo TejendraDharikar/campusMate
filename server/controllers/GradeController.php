@@ -119,3 +119,4 @@ class GradeController
     echo json_encode(["success" => $success]);
   }
 }
+?>

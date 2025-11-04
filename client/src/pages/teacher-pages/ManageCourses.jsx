@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../context/useAuthStore";
 import { useAllStudentCourses } from "../../hooks/useStudentCourses"
-import { deleteCourse } from "../../services/courseService";
+import { useCourseMutation } from "../../hooks/useCourseMutation";
 
 const ManageCourses = () => {
   const navigate = useNavigate();
   const {user} = useAuthStore();
   const {data: studCourses, isPending, isError, error} = useAllStudentCourses(user?.id);
-
+const { deleteCourse } = useCourseMutation();
   console.log("auth data:", user);
   console.log("all student courses data:", studCourses);
   console.log("Is array?", Array.isArray(studCourses));
@@ -31,13 +31,18 @@ const ManageCourses = () => {
     return <p>Invalid data format received</p>;
   }
 
-  const handleDelete = (student_id) => {
-    console.log("Deleting course with id:", student_id);
-    if (confirm("Are you sure you want to delete this course enrollment?")) {
-      deleteCourse(student_id);
-      
-    };
-  }
+  const handleDelete = async(student_id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this course enrollment?");
+    if (!confirmDelete) return;
+
+    try {
+      await deleteCourse(student_id);
+    
+    } catch (err) {
+      console.error("Failed to delete course enrollment:", err);
+      alert("Failed to delete course. Please try again.");
+    }
+  };
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold mb-4">Students Enrolled in Your Courses</h2>

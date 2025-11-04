@@ -17,3 +17,4 @@ if ($uri === '/api/courses/all' && $method === 'POST') {
 } elseif ($uri === '/api/courses/delete' && $method === 'DELETE') {
   CourseController::deleteCourse();
 }
+?>
