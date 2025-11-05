@@ -18,6 +18,7 @@ import MyGrades from "./pages/student-pages/MyGrades";
 import AttendanceForm from "./components/AttendanceForm";
 import GradeForm from "./components/GradeForm";
 import CourseForm from "./components/CourseForm";
+import { AddAttendancePage } from "./pages/teacher-pages/AddAttendance";
 
 const router = createBrowserRouter([
   {
@@ -141,6 +142,14 @@ const router = createBrowserRouter([
     element: (
       <DashboardLayout>
         <AttendanceForm />
+      </DashboardLayout>
+    ),
+  },
+  {
+    path: "/add-attendance",
+    element: (
+      <DashboardLayout>
+        <AddAttendancePage />
       </DashboardLayout>
     ),
   },

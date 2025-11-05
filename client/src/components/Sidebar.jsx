@@ -11,12 +11,14 @@ const Sidebar = () => {
       { label: "My Courses", path: "/student-courses" },
       { label: "My Grades", path: "/student-grade" },
       { label: "Attendance", path: "/student-attendance" },
+      
     ],
     teacher: [
       { label: "Dashboard", path: "/teacher-dashboard" },
       { label: " Student Courses", path: "/manage-courses" },
       { label: "Manage Grades", path: "/teacher-grade" },
       { label: "Manage Attendance", path: "/teacher-attendance" },
+      {label:"Add Attendance",path:"/add-attendance"}
     ],
   };
 
