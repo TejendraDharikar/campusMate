@@ -67,9 +67,9 @@ export const AddAttendancePage = () => {
           <tbody>
             {students.map((student) => (
               <tr key={student.student_id} className="border-t hover:bg-blue-50">
-                <td className="p-3">{today}</td>
-                <td className="p-3">{student.student_name}</td>
-                <td className="p-3">
+                <td className="p-3 text-center">{today}</td>
+                <td className="p-3 text-center">{student.student_name}</td>
+                <td className="p-3 text-center">
                   <select
                     className="border rounded px-2 py-1"
                     value={statuses[student.student_id] || ""}
