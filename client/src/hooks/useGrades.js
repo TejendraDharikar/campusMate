@@ -3,7 +3,9 @@ import {
   fetchAllStudentGrades,
   fetchGradeById,
   fetchStudentGrades,
+  gradeByCourse,
 } from "../services/gradeService";
+import { useSearchParams } from "react-router-dom";
 
 export const useStudentGrades = (student_id) => {
   return useQuery({
@@ -15,6 +17,21 @@ export const useStudentGrades = (student_id) => {
     },
   });
 };
+
+
+export const useGradeByCourse=(courseId)=>{
+  
+
+  return useQuery({
+    queryKey:["gradebycourse",courseId],
+    queryFn:()=>gradeByCourse(courseId),
+    enabled:!!courseId,
+     onError: (err) => {
+      console.error("failed to fetch grade by courseID in hooks", err);
+    },
+  })
+}
+
 
 export const useGradeById = (grade_id) => {
   return useQuery({

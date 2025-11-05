@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../context/useAuthStore";
 import { useAllStudentCourses } from "../../hooks/useStudentCourses"
 import { useCourseMutation } from "../../hooks/useCourseMutation";
+import GradeNavbar from "../../components/GradeNavbar";
 
 const ManageCourses = () => {
   const navigate = useNavigate();
@@ -45,6 +46,7 @@ const { deleteCourse } = useCourseMutation();
   };
   return (
     <div className="space-y-6">
+     
       <h2 className="text-2xl font-bold mb-4">Students Enrolled in Your Courses</h2>
       
       {studCourses.length === 0 ? (

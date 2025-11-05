@@ -26,6 +26,20 @@ class GradeController
     echo json_encode($grades);
   }
 
+
+
+   public static function gradeByCourse(){
+ $input = json_decode(file_get_contents("php://input"), true);
+    $course_id = $input['courseId'] ?? null;
+    if (!$course_id) {
+      echo json_encode(["error" => "Missing course Id"]);
+      exit;
+    }
+    $record = GradeModel::GradesByCourse($course_id);
+    echo json_encode($record);
+  }
+
+
   //  Get grades by teacher (via user_id)
   public static function teacherGrades()
   {

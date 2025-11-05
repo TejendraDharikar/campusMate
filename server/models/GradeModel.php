@@ -26,6 +26,29 @@ class GradeModel
     return $result;
   }
 
+
+  public static function GradesByCourse($course_id)
+  {
+    global $conn;
+    $stmt = $conn->prepare("SELECT 
+    g.id AS grade_id,
+    s.name AS student_name,
+    c.title AS course_name,
+    g.score,
+    g.remarks,
+    g.graded_at
+    FROM grades g
+    JOIN students s ON g.student_id = s.id
+    JOIN courses c ON g.course_id = c.id
+    WHERE g.course_id = ?
+    ORDER BY g.graded_at DESC;");
+    $stmt->bind_param("i", $course_id);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    return $result;
+  }
+
+
   public static function getByStudent($student_id)
   {
     global $conn;

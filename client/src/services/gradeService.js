@@ -31,6 +31,22 @@ export const fetchGradeById = async (grade_id) => {
   }
 };
 
+export const gradeByCourse=async(courseId)=>{
+  console.log("sending in backend",courseId);
+  
+  try{
+const res=await axios.post(`${BASE_URL}/api/grade/bycourse?courseId=${courseId}`,{
+  courseId:courseId
+})
+console.log("receiving in backend",res.data);
+return res.data;
+  }catch(err){
+    throw new Error("Backend:",
+      err.response?.data?.message || "Failed to get grade by courseID in service");
+  };
+}
+
+
 export const addGrade = async ({ student_id, course_id, grade, remarks }) => {
   console.log("sending to backend:", student_id, course_id, grade, remarks);
 

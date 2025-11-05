@@ -10,6 +10,8 @@ if ($uri === '/api/grade/all' && $method === 'POST') {
   GradeController::studentGrades();
 } elseif ($uri === '/api/grade/byid' && $method === 'POST') {
   GradeController::getById();
+}elseif ($uri === '/api/grade/bycourse' && $method === 'POST') {
+  GradeController::gradeByCourse();
 } elseif ($uri === '/api/grade/add' && $method === 'POST') {
   GradeController::addGrade();
 } elseif ($uri === '/api/grade/update' && $method === 'PATCH') {
