@@ -54,7 +54,7 @@ console.log("Logged in user:", user);
           </tr>
         </thead>
         <tbody>
-          {attendanceRecords.map((record, index) => (
+          {Array.isArray(attendanceRecords)&& attendanceRecords.length>0?(attendanceRecords.map((record, index) => (
             <tr key={index} className="border-t hover:bg-blue-50">
               <td className="p-3">{record.date}</td>
               <td className="p-3">{record.student}</td>
@@ -78,7 +78,14 @@ console.log("Logged in user:", user);
               </td>
              
             </tr>
-          ))}
+          ))):(
+             <tr>
+      <td colSpan="5" className="text-center p-4 text-gray-500">
+        No attendance records found.
+      </td>
+    </tr>
+
+          )}
         </tbody>
       </table>
     </div>
