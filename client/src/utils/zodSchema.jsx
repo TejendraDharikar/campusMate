@@ -35,5 +35,12 @@ export const registerSchema = z.object({
     }
   });
 
+
+export const noticeSchema = z.object({
+  title: z.string().min(3, "Title is too short"),
+  body: z.string().min(10, "Body must be at least 10 characters"),
+  expires_at: z.string().optional(),
+});
+
  
 

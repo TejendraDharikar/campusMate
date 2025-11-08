@@ -19,6 +19,9 @@ import AttendanceForm from "./components/AttendanceForm";
 import GradeForm from "./components/GradeForm";
 import CourseForm from "./components/CourseForm";
 import { AddAttendancePage } from "./pages/teacher-pages/AddAttendance";
+import TeacherNotice from "./pages/teacher-pages/TeacherNotice";
+import NoticeForm from "./components/NoticeForm";
+import StudentNotice from "./pages/student-pages/studentnotice";
 
 const router = createBrowserRouter([
   {
@@ -150,6 +153,37 @@ const router = createBrowserRouter([
     element: (
       <DashboardLayout>
         <AddAttendancePage />
+      </DashboardLayout>
+    ),
+  },
+   {
+    path: "/manage-notice",
+    element: (
+      <DashboardLayout>
+        <TeacherNotice />
+      </DashboardLayout>
+    ),
+  },
+  {
+    path: "/student-notice",
+    element: (
+      <DashboardLayout>
+        <StudentNotice />
+      </DashboardLayout>
+    ),
+  },
+  {
+    path: "/noticeform",
+    element: (
+      <DashboardLayout>
+        <NoticeForm />
+      </DashboardLayout>
+    ),
+  },{
+    path: "/noticeform/:noticeId",
+    element: (
+      <DashboardLayout>
+        <NoticeForm />
       </DashboardLayout>
     ),
   },

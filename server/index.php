@@ -9,5 +9,5 @@ require_once __DIR__ . "/routes/userRoutes.php";
 require_once __DIR__ . "/routes/authRoutes.php";
 require_once __DIR__ . "/routes/gradeRoutes.php";
 require_once __DIR__ . '/routes/dashboardRoutes.php';
-require_once __DIR__ . '/routes/studentRoutes.php';
+require_once __DIR__ . '/routes/studentRoutes.php';require_once __DIR__ . '/routes/noticeRoutes.php';
 ?>
